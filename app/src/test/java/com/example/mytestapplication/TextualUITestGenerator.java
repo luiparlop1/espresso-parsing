@@ -17,80 +17,97 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 public class TextualUITestGenerator {
 
     private static final String FILE_PATH = "src/androidTest/java/com/example/mytestapplication/SimpleTest.java";
-    
+
+    WriterUtil writerUtil = new WriterUtil();
+
     @Test
-    public void textualUITestGenerator() throws FileNotFoundException {
+    public void textualUITestGenerator() throws FileNotFoundException, IllegalAccessException, NoSuchFieldException, NoSuchMethodException, InvocationTargetException {
         // Parser configuration:
         TypeSolver typeSolver = new CombinedTypeSolver();
         JavaSymbolSolver symbolSolver = new JavaSymbolSolver(typeSolver);
         StaticJavaParser.getConfiguration().setSymbolResolver(symbolSolver);
         // Parsing:
-        CompilationUnit cu= StaticJavaParser.parse(new File(FILE_PATH));
-        Optional<ClassOrInterfaceDeclaration> simpleTest=cu.getClassByName("SimpleTest");
+        CompilationUnit cu = StaticJavaParser.parse(new File(FILE_PATH));
+        Optional<ClassOrInterfaceDeclaration> simpleTest = cu.getClassByName("SimpleTest");
         // We print the class to check that the class is correcly parsed
         System.out.println(simpleTest);
         // We  visit each methos and print its name:
         VoidVisitor<?> methodNameVisitor = new MethodNamePrinter();
         methodNameVisitor.visit(cu, null);
-        cu.findAll(MethodDeclaration.class).forEach(md -> {exploreMethods(md);});
-
+        cu.findAll(MethodDeclaration.class).forEach((md) -> {
+            exploreMethods(md);
+        });
     }
 
-    public void exploreMethods(MethodDeclaration md){
-        List<String> methodsToAvoid= Lists.newArrayList("matchesSafely","childAtPosition","describeInfo");
-        if(!methodsToAvoid.contains(md.getName())){
+    public void exploreMethods(MethodDeclaration md) {
+        List<String> methodsToAvoid = Lists.newArrayList("matchesSafely", "childAtPosition", "describeInfo");
+        if (!methodsToAvoid.contains(md.getName())) {
             processMethod(md);
         }
     }
 
     private void processMethod(MethodDeclaration md) {
         // Procesamos las declaraciones de interacciones:
-        md.findAll(VariableDeclarationExpr.class).forEach(vde -> {processVariableDesclaration(vde);});
+        md.findAll(VariableDeclarationExpr.class).forEach(vde -> {
+            processVariableDesclaration(vde);
+        });
         // Procesmoas las acciones sobre las interacciones:
-        md.findAll(MethodCallExpr.class).forEach(cn ->{
-                processAction(cn);
+        md.findAll(MethodCallExpr.class).forEach(cn -> {
+            processAction(cn);
         });
     }
 
     private void processVariableDesclaration(VariableDeclarationExpr vde) {
-        // Imprimimos el nombre de l
+        // Imprimimos el nombre de la variable
         System.out.println("Variable name:" + vde.getVariables().get(0).getName());
+        writerUtil.write("Variable name:" + vde.getVariables().get(0).getName());
         // Imprimimos el tipo de selector usado y sus parámetros:
-        vde.findAll(MethodCallExpr.class).forEach(mc->{findeSelector(mc);});
+        vde.findAll(MethodCallExpr.class).forEach(mc -> {
+            findeSelector(mc);
+        });
     }
 
     private void processAction(MethodCallExpr cn) {
         cn.findAll(MethodCallExpr.class).forEach(mc -> {
-            if(mc.getName().toString().equals("perform"))
-                System.out.println("Perform "+ mc.getArgument(0).toString()+" on "+cn.getScope().toString());
+            if (mc.getName().toString().equals("perform")) {
+                System.out.println("Perform " + mc.getArgument(0).toString() + " on " + cn.getScope().toString());
+                writerUtil.write("Perform " + mc.getArgument(0).toString() + " on " + cn.getScope().toString());
+            }
         });
     }
 
     private void findeSelector(MethodCallExpr mc) {
-        List<String> supportedSelectors=Lists.newArrayList("withId","withText");
-        switch (mc.getName().toString()){
+        List<String> supportedSelectors = Lists.newArrayList("withId", "withText");
+        switch (mc.getName().toString()) {
             case "withId":
-                System.out.println("BY ID:"+mc.getArguments().get(0).toString());
+                System.out.println("BY ID:" + mc.getArguments().get(0).toString());
+                writerUtil.write("BY ID:" + mc.getArguments().get(0).toString());
                 break;
             case "withText":
-                System.out.println("BY TEXT:"+mc.getArguments().get(0).toString());
+                System.out.println("BY TEXT:" + mc.getArguments().get(0).toString());
+                writerUtil.write("BY TEXT:" + mc.getArguments().get(0).toString());
                 break;
-           // default:
-           //    System.out.println("Unrecognized selector:" + mc.getName().toString()) ;
+            // default:
+            //    System.out.println("Unrecognized selector:" + mc.getName().toString()) ;
         }
     }
 
-    private static class MethodNamePrinter extends VoidVisitorAdapter<Void> {
+    private class MethodNamePrinter extends VoidVisitorAdapter<Void> {
         @Override
-         public void visit(MethodDeclaration md, Void arg) {
-                 super.visit(md, arg);
-                 System.out.println("Method Name Printed: " + md.getName());
-             }
+        public void visit(MethodDeclaration md, Void arg) {
+            super.visit(md, arg);
+            System.out.println("Method Name Printed: " + md.getName());
+            TextualUITestGenerator.this.writerUtil.write("Method Name Printed: " + md.getNameAsString());
+        }
     }
 }
