@@ -18,7 +18,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +29,9 @@ public class TextualUITestGenerator {
     private static final String FILE_PATH = "src\\androidTest\\java\\esadrcanfer\\us\\alumno\\autotesting\\tests\\SimpleTest.java";
 
     WriterUtil writerUtil = new WriterUtil();
+
+    private List<String> objectTypes = new ArrayList<>();
+    private List<String> selectors = new ArrayList<>();
 
     @Test
     public void textualUITestGenerator() throws FileNotFoundException {
@@ -47,12 +50,19 @@ public class TextualUITestGenerator {
         cu.findAll(MethodDeclaration.class).forEach((md) -> {
             exploreMethods(md);
         });
+        writerUtil.write(MainActivity.class.getCanonicalName());
+        writerUtil.write("-1");
+        writerUtil.write(String.valueOf(objectTypes.size()));
+        for(int i = 0; i < objectTypes.size(); i++){
+            writerUtil.write(objectTypes.get(i)+","+" UiSelector"+"["+selectors.get(i)+"]"+",");
+        }
     }
 
     public void exploreMethods(MethodDeclaration md) {
         List<String> methodsToAvoid = Lists.newArrayList("matchesSafely", "childAtPosition", "describeInfo");
         if (!methodsToAvoid.contains(md.getName())) {
             processMethod(md);
+            //writerUtil.write(objectType+","+" UiSelector"+"["+selector+"]"+",");
         }
     }
 
@@ -69,36 +79,36 @@ public class TextualUITestGenerator {
 
     private void processVariableDesclaration(VariableDeclarationExpr vde) {
         // Imprimimos el nombre de la variable
-        System.out.println("Variable name:" + vde.getVariables().get(0).getName());
-        writerUtil.write("Variable name:" + vde.getVariables().get(0).getName());
+        //System.out.println("Variable name:" + vde.getVariables().get(0).getName());
+        //writerUtil.write("Variable name:" + vde.getVariables().get(0).getName());
         // Imprimimos el tipo de selector usado y sus parámetros:
         vde.findAll(MethodCallExpr.class).forEach(mc -> {
-            findeSelector(mc);
+            finderSelector(mc);
         });
     }
 
     private void processAction(MethodCallExpr cn) {
         cn.findAll(MethodCallExpr.class).forEach(mc -> {
             if (mc.getName().toString().equals("perform")) {
-                System.out.println("Perform " + mc.getArgument(0).toString() + " on " + cn.getScope().toString());
-                writerUtil.write("Perform " + mc.getArgument(0).toString() + " on " + cn.getScope().toString());
+                if(mc.getArgument(0).toString().equals("ViewActions.click()")){
+                    objectTypes.add("BUTTON");
+                }
+                //System.out.println("Perform " + mc.getArgument(0).toString() + " on " + cn.getScope().toString());
+                //writerUtil.write("Perform " + mc.getArgument(0).toString() + " on " + cn.getScope().toString());
             }
         });
     }
 
-    private void findeSelector(MethodCallExpr mc) {
+    private void finderSelector(MethodCallExpr mc) {
         List<String> supportedSelectors = Lists.newArrayList("withId", "withText");
-        switch (mc.getName().toString()) {
-            case "withId":
-                System.out.println("BY ID:" + mc.getArguments().get(0).toString());
-                writerUtil.write("BY ID:" + mc.getArguments().get(0).toString());
-                break;
-            case "withText":
-                System.out.println("BY TEXT:" + mc.getArguments().get(0).toString());
-                writerUtil.write("BY TEXT:" + mc.getArguments().get(0).toString());
-                break;
-            // default:
-            //    System.out.println("Unrecognized selector:" + mc.getName().toString()) ;
+        if(mc.getScope().toString().equals("Optional[ViewMatchers]")){
+            if(mc.getArguments().toString().contains("R")){
+                for(int i=0; i < mc.getArguments().size(); i++){
+                    if(mc.getParentNode().toString().contains("allOf")) {
+                        selectors.add("RESOURCE_ID="+MainActivity.class.getCanonicalName()+":id/"+mc.getArguments().get(i).toString().substring(5));
+                    }
+                }
+            }
         }
     }
 
@@ -106,8 +116,8 @@ public class TextualUITestGenerator {
         @Override
         public void visit(MethodDeclaration md, Void arg) {
             super.visit(md, arg);
-            System.out.println("Method Name Printed: " + md.getName());
-            esadrcanfer.us.alumno.autotesting.TextualUITestGenerator.this.writerUtil.write("Method Name Printed: " + md.getNameAsString());
+            //System.out.println("Method Name Printed: " + md.getName());
+            //esadrcanfer.us.alumno.autotesting.TextualUITestGenerator.this.writerUtil.write("Method Name Printed: " + md.getNameAsString());
         }
     }
 }
