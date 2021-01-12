@@ -50,12 +50,13 @@ public class TextualUITestGenerator {
         cu.findAll(MethodDeclaration.class).forEach((md) -> {
             exploreMethods(md);
         });
-        writerUtil.write(MainActivity.class.getCanonicalName());
+        writerUtil.write(BuildConfig.APPLICATION_ID);
         writerUtil.write("-1");
         writerUtil.write(String.valueOf(objectTypes.size()));
         for(int i = 0; i < objectTypes.size(); i++){
             writerUtil.write(objectTypes.get(i)+","+" UiSelector"+"["+selectors.get(i)+"]"+",");
         }
+        writerUtil.write("finalState.contains(testActions[1].value)");
     }
 
     public void exploreMethods(MethodDeclaration md) {
@@ -105,7 +106,7 @@ public class TextualUITestGenerator {
             if(mc.getArguments().toString().contains("R")){
                 for(int i=0; i < mc.getArguments().size(); i++){
                     if(mc.getParentNode().toString().contains("allOf")) {
-                        selectors.add("RESOURCE_ID="+MainActivity.class.getCanonicalName()+":id/"+mc.getArguments().get(i).toString().substring(5));
+                        selectors.add("RESOURCE_ID="+BuildConfig.APPLICATION_ID+":id/"+mc.getArguments().get(i).toString().substring(5));
                     }
                 }
             }
