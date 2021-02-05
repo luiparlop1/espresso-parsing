@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -15,12 +16,14 @@ import java.util.List;
 public class NotesAdapter extends BaseAdapter {
     HashMap<Integer, String> mIdMap = new HashMap<Integer, String>();
     private Context context;
+    String selectedItem = null;
 
-    public NotesAdapter(Context context, List<String> objects) {
+    public NotesAdapter(Context context, List<String> objects, String item) {
         this.context = context;
         for (int i = 0; i < objects.size(); ++i) {
             mIdMap.put(i, objects.get(i));
         }
+        this.selectedItem = item;
     }
 
     @Override
@@ -56,10 +59,12 @@ public class NotesAdapter extends BaseAdapter {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), DetailsActivity.class);
                 intent.putExtra("noteid", position);
+                intent.putExtra("data", selectedItem);
                 context.startActivity(intent);
             }
         });
 
         return view;
     }
+
 }

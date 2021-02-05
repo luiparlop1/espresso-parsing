@@ -13,13 +13,19 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    String selectedItem = null;
+
+    public void setItem(String item){
+        this.selectedItem = item;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         final ListView listview = (ListView) findViewById(R.id.listView1);
-        final NotesAdapter adapter = new NotesAdapter(this, NoteStore.getNotes());
+        final NotesAdapter adapter = new NotesAdapter(this, NoteStore.getNotes(), NoteStore.getSelectedItem());
         listview.setAdapter(adapter);
     }
     private class StableArrayAdapter extends ArrayAdapter<String> {
