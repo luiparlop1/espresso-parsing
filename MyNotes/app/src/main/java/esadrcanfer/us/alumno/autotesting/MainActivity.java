@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final ListView listview = (ListView) findViewById(R.id.listView1);
-        final NotesAdapter adapter = new NotesAdapter(this, NoteStore.getNotes(), NoteStore.getSelectedItem());
+        final NotesAdapter adapter = new NotesAdapter(this, NoteStore.getNotes(), NoteStore.getSelectedItems(), NoteStore.getSelectedRads());
         listview.setAdapter(adapter);
     }
     private class StableArrayAdapter extends ArrayAdapter<String> {

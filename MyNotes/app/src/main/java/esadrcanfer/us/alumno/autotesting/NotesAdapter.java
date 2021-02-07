@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -16,14 +17,16 @@ import java.util.List;
 public class NotesAdapter extends BaseAdapter {
     HashMap<Integer, String> mIdMap = new HashMap<Integer, String>();
     private Context context;
-    String selectedItem = null;
+    HashMap<Integer, String> itemsMap = new HashMap<Integer, String>();
+    HashMap<Integer, String> radsMap = new HashMap<Integer, String>();
 
-    public NotesAdapter(Context context, List<String> objects, String item) {
+    public NotesAdapter(Context context, List<String> objects, List<String> items, List<String> rads) {
         this.context = context;
         for (int i = 0; i < objects.size(); ++i) {
             mIdMap.put(i, objects.get(i));
+            itemsMap.put(i, items.get(i));
+            radsMap.put(i, rads.get(i));
         }
-        this.selectedItem = item;
     }
 
     @Override
@@ -59,12 +62,23 @@ public class NotesAdapter extends BaseAdapter {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), DetailsActivity.class);
                 intent.putExtra("noteid", position);
-                intent.putExtra("data", selectedItem);
+                intent.putExtra("data", itemsMap.get(position));
+                intent.putExtra("radioChosen", radsMap.get(position));
                 context.startActivity(intent);
             }
         });
 
         return view;
+    }
+
+    private int getIndex(Spinner spinner, String myString){
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
+                return i;
+            }
+        }
+
+        return 0;
     }
 
 }

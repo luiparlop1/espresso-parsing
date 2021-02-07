@@ -7,10 +7,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 public class CreateNoteActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+
+    RadioButton c1, c2, c3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,9 @@ public class CreateNoteActivity extends AppCompatActivity implements AdapterView
 
         spinner.setOnItemSelectedListener(this);
 
+        c1 = (RadioButton) findViewById(R.id.idRadio1);
+        c2 = (RadioButton) findViewById(R.id.idRadio2);
+        c3 = (RadioButton) findViewById(R.id.idRadio3);
     }
 
     public void save(View view) {
@@ -36,10 +42,28 @@ public class CreateNoteActivity extends AppCompatActivity implements AdapterView
             Spinner spinner1 = (Spinner) findViewById(R.id.spinner1);
             //get selected value here
             String itemStr = spinner1.getSelectedItem().toString();
-            NoteStore.addNotes(edit.getText().toString(), itemStr);
             //put selected vale and start new activity
+
+            String radStr = null; // store the text corresponding to  the RadioButton which is clicked
+
+            if(c1.isChecked() == true){
+                radStr = c1.getText().toString();
+            }
+
+            if(c2.isChecked() == true){
+                radStr = c2.getText().toString();
+            }
+
+            if(c3.isChecked() == true){
+                radStr = c3.getText().toString();
+            }
+
+            NoteStore.addNotes(edit.getText().toString(), itemStr, radStr);
+
             Intent intent = new Intent(view.getContext(), MainActivity.class);
             intent.putExtra("data", itemStr);
+            intent.putExtra("radioChosen", radStr);
+
             startActivityForResult(intent, 0);
             finish();
         }
@@ -58,5 +82,23 @@ public class CreateNoteActivity extends AppCompatActivity implements AdapterView
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    public void onRadioButtonClicked(View view) {
+        String radStr = null;
+
+        if(c1.isChecked() == true){
+            radStr = c1.getText().toString();
+        }
+
+        if(c2.isChecked() == true){
+            radStr = c2.getText().toString();
+        }
+
+        if(c3.isChecked() == true){
+            radStr = c3.getText().toString();
+        }
+
+        Toast.makeText(this, radStr, Toast.LENGTH_SHORT).show();
     }
 }
