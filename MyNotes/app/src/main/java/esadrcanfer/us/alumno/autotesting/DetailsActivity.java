@@ -6,14 +6,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DetailsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private Integer id;
-    RadioButton c1, c2, c3;
+    RadioButton r1, r2, r3;
+    CheckBox c1, c2, c3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,22 +45,41 @@ public class DetailsActivity extends AppCompatActivity implements AdapterView.On
 
             String radString = extras.getString("radioChosen");
 
-            c1 = (RadioButton) findViewById(R.id.idRadio1);
-            c2 = (RadioButton) findViewById(R.id.idRadio2);
-            c3 = (RadioButton) findViewById(R.id.idRadio3);
+            r1 = (RadioButton) findViewById(R.id.idRadio1);
+            r2 = (RadioButton) findViewById(R.id.idRadio2);
+            r3 = (RadioButton) findViewById(R.id.idRadio3);
 
-            if(c1.getText().toString().equals(radString)){
+            if(r1.getText().toString().equals(radString)){
+                r1.setChecked(true);
+            }
+
+            if(r2.getText().toString().equals(radString)){
+                r2.setChecked(true);
+            }
+
+            if(r3.getText().toString().equals(radString)){
+                r3.setChecked(true);
+            }
+
+            Boolean check1 = extras.getBoolean("boxChosen1");
+            Boolean check2 = extras.getBoolean("boxChosen2");
+            Boolean check3 = extras.getBoolean("boxChosen3");
+
+            c1 = (CheckBox) findViewById(R.id.checkBox);
+            c2 = (CheckBox) findViewById(R.id.checkBox2);
+            c3 = (CheckBox) findViewById(R.id.checkBox3);
+
+            if(check1.equals(true)){
                 c1.setChecked(true);
             }
 
-            if(c2.getText().toString().equals(radString)){
+            if(check2.equals(true)){
                 c2.setChecked(true);
             }
 
-            if(c3.getText().toString().equals(radString)){
+            if(check3.equals(true)){
                 c3.setChecked(true);
             }
-
         }
     }
 
@@ -69,24 +93,27 @@ public class DetailsActivity extends AppCompatActivity implements AdapterView.On
 
             String radStr = null; // store the text corresponding to  the RadioButton which is clicked
 
-            if(c1.isChecked() == true){
-                radStr = c1.getText().toString();
+            if(r1.isChecked() == true){
+                radStr = r1.getText().toString();
             }
 
-            if(c2.isChecked() == true){
-                radStr = c2.getText().toString();
+            if(r2.isChecked() == true){
+                radStr = r2.getText().toString();
             }
 
-            if(c3.isChecked() == true){
-                radStr = c3.getText().toString();
+            if(r3.isChecked() == true){
+                radStr = r3.getText().toString();
             }
 
-            NoteStore.updateNote(edit.getText().toString(), id, itemStr, radStr);
+            NoteStore.updateNote(edit.getText().toString(), id, itemStr, radStr, c1.isChecked(), c2.isChecked(), c3.isChecked());
 
             //put selected vale and start new activity
             Intent intent = new Intent(view.getContext(), MainActivity.class);
             intent.putExtra("data", itemStr);
             intent.putExtra("radioChosen", radStr);
+            intent.putExtra("boxChosen1", c1.isChecked());
+            intent.putExtra("boxChosen2", c2.isChecked());
+            intent.putExtra("boxChosen3", c3.isChecked());
 
             startActivityForResult(intent, 0);
         }
@@ -133,18 +160,36 @@ public class DetailsActivity extends AppCompatActivity implements AdapterView.On
     public void onRadioButtonClicked(View view) {
         String radStr = null;
 
-        if(c1.isChecked() == true){
-            radStr = c1.getText().toString();
+        if(r1.isChecked() == true){
+            radStr = r1.getText().toString();
         }
 
-        if(c2.isChecked() == true){
-            radStr = c2.getText().toString();
+        if(r2.isChecked() == true){
+            radStr = r2.getText().toString();
         }
 
-        if(c3.isChecked() == true){
-            radStr = c3.getText().toString();
+        if(r3.isChecked() == true){
+            radStr = r3.getText().toString();
         }
 
         Toast.makeText(this, radStr, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onCheckBoxClicked(View view) {
+        String checkStr = null;
+
+        if(c1.isChecked() == true){
+            checkStr = c1.getText().toString();
+        }
+
+        if(c2.isChecked() == true){
+            checkStr = c2.getText().toString();
+        }
+
+        if(c3.isChecked() == true){
+            checkStr = c3.getText().toString();
+        }
+
+        Toast.makeText(this, checkStr, Toast.LENGTH_SHORT).show();
     }
 }

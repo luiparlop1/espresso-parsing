@@ -17,6 +17,42 @@
         android:textStyle="bold"
         android:layout_margin="10dp"/>
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="105dp"
+        android:text="Tipo:"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="194dp"
+        android:text="Importancia:"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="338dp"
+        android:text="Recordatorio:"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:orientation="horizontal"
@@ -43,8 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="98dp"
+        android:layout_marginTop="135dp"
         android:background="@android:drawable/btn_dropdown"
         android:spinnerMode="dropdown" />
 
@@ -53,15 +88,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="-1dp"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="230dp"
         android:orientation="vertical">
 
         <RadioButton
             android:id="@+id/idRadio1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:baselineAligned="false"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:onClick="onRadioButtonClicked"
             android:text="Critica" />
 
@@ -69,6 +104,8 @@
             android:id="@+id/idRadio2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
             android:onClick="onRadioButtonClicked"
             android:text="Importante" />
 
@@ -76,9 +113,41 @@
             android:id="@+id/idRadio3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
             android:onClick="onRadioButtonClicked"
             android:text="Rutinaria" />
     </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="371dp"
+        android:onClick="onCheckBoxClicked"
+        android:text="Sms" />
+
+    <CheckBox
+        android:id="@+id/checkBox3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="451dp"
+        android:onClick="onCheckBoxClicked"
+        android:text="Notificacion" />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="411dp"
+        android:onClick="onCheckBoxClicked"
+        android:text="E-mail" />
 
     <Button
         android:id="@+id/button"
@@ -86,8 +155,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout1"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="141dp"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="392dp"
         android:onClick="save"
         android:text="Save" />
 
@@ -98,10 +167,8 @@
         android:layout_below="@+id/button"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="-1dp"
         android:onClick="cancel"
         android:text="Cancel" />
+
 
 </RelativeLayout>

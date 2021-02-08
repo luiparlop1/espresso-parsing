@@ -19,13 +19,21 @@ public class NotesAdapter extends BaseAdapter {
     private Context context;
     HashMap<Integer, String> itemsMap = new HashMap<Integer, String>();
     HashMap<Integer, String> radsMap = new HashMap<Integer, String>();
+    HashMap<Integer, Boolean> selected1Map = new HashMap<Integer, Boolean>();
+    HashMap<Integer, Boolean> selected2Map = new HashMap<Integer, Boolean>();
+    HashMap<Integer, Boolean> selected3Map = new HashMap<Integer, Boolean>();
 
-    public NotesAdapter(Context context, List<String> objects, List<String> items, List<String> rads) {
+
+
+    public NotesAdapter(Context context, List<String> objects, List<String> items, List<String> rads, List<Boolean> selectedOption1, List<Boolean> selectedOption2, List<Boolean> selectedOption3) {
         this.context = context;
         for (int i = 0; i < objects.size(); ++i) {
             mIdMap.put(i, objects.get(i));
             itemsMap.put(i, items.get(i));
             radsMap.put(i, rads.get(i));
+            selected1Map.put(i, selectedOption1.get(i));
+            selected2Map.put(i, selectedOption2.get(i));
+            selected3Map.put(i, selectedOption3.get(i));
         }
     }
 
@@ -64,21 +72,13 @@ public class NotesAdapter extends BaseAdapter {
                 intent.putExtra("noteid", position);
                 intent.putExtra("data", itemsMap.get(position));
                 intent.putExtra("radioChosen", radsMap.get(position));
+                intent.putExtra("boxChosen1", selected1Map.get(position));
+                intent.putExtra("boxChosen2", selected2Map.get(position));
+                intent.putExtra("boxChosen3", selected3Map.get(position));
                 context.startActivity(intent);
             }
         });
 
         return view;
     }
-
-    private int getIndex(Spinner spinner, String myString){
-        for (int i=0;i<spinner.getCount();i++){
-            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
-                return i;
-            }
-        }
-
-        return 0;
-    }
-
 }
