@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.filters.LargeTest;
@@ -23,28 +22,22 @@ import org.junit.runner.RunWith;
 import esadrcanfer.us.alumno.autotesting.MainActivity;
 import esadrcanfer.us.alumno.autotesting.R;
 
-import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.anything;
-import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class CreateNoteTest {
+public class CheckboxesTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void createNoteTest() {
+    public void checkboxesTest() {
         ViewInteraction appCompatButton = onView(
                 Matchers.allOf(ViewMatchers.withId(R.id.button), withText("Create note"),
                         childAtPosition(
@@ -55,45 +48,17 @@ public class CreateNoteTest {
                         isDisplayed()));
         appCompatButton.perform(click());
 
-        ViewInteraction appCompatEditText = onView(
-                allOf(withId(R.id.editText1),
-                        childAtPosition(
-                                allOf(withId(R.id.linearLayout1),
-                                        childAtPosition(
-                                                withClassName(is("android.widget.RelativeLayout")),
-                                                4)),
-                                1),
-                        isDisplayed()));
-        appCompatEditText.perform(replaceText("Prueba"), closeSoftKeyboard());
-
-        ViewInteraction appCompatSpinner = onView(
-                allOf(withId(R.id.spinner1),
+        ViewInteraction appCompatCheckBox = onView(
+                allOf(withId(R.id.checkBox), withText("Sms"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                5),
+                                7),
                         isDisplayed()));
-        appCompatSpinner.perform(click());
+        appCompatCheckBox.perform(click());
 
-        DataInteraction appCompatCheckedTextView = onData(anything())
-                .inAdapterView(childAtPosition(
-                        withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
-                        0))
-                .atPosition(2);
-        appCompatCheckedTextView.perform(click());
-
-        ViewInteraction appCompatRadioButton = onView(
-                allOf(withId(R.id.idRadio3), withText("Rutinaria"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.RelativeLayout")),
-                                        6),
-                                2),
-                        isDisplayed()));
-        appCompatRadioButton.perform(click());
-
-        ViewInteraction appCompatCheckBox = onView(
+        ViewInteraction appCompatCheckBox2 = onView(
                 allOf(withId(R.id.checkBox2), withText("E-mail"),
                         childAtPosition(
                                 childAtPosition(
@@ -101,9 +66,9 @@ public class CreateNoteTest {
                                         0),
                                 9),
                         isDisplayed()));
-        appCompatCheckBox.perform(click());
+        appCompatCheckBox2.perform(click());
 
-        ViewInteraction appCompatCheckBox2 = onView(
+        ViewInteraction appCompatCheckBox3 = onView(
                 allOf(withId(R.id.checkBox3), withText("Notificacion"),
                         childAtPosition(
                                 childAtPosition(
@@ -111,17 +76,37 @@ public class CreateNoteTest {
                                         0),
                                 8),
                         isDisplayed()));
-        appCompatCheckBox2.perform(click());
+        appCompatCheckBox3.perform(click());
 
-        ViewInteraction appCompatButton2 = onView(
-                allOf(withId(R.id.button), withText("Save"),
+        ViewInteraction appCompatCheckBox4 = onView(
+                allOf(withId(R.id.checkBox3), withText("Notificacion"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                10),
+                                8),
                         isDisplayed()));
-        appCompatButton2.perform(click());
+        appCompatCheckBox4.perform(click());
+
+        ViewInteraction appCompatCheckBox5 = onView(
+                allOf(withId(R.id.checkBox2), withText("E-mail"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                9),
+                        isDisplayed()));
+        appCompatCheckBox5.perform(click());
+
+        ViewInteraction appCompatCheckBox6 = onView(
+                allOf(withId(R.id.checkBox), withText("Sms"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                7),
+                        isDisplayed()));
+        appCompatCheckBox6.perform(click());
     }
 
     private static Matcher<View> childAtPosition(

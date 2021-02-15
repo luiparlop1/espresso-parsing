@@ -25,7 +25,7 @@ import java.util.Optional;
 public class TextualUITestGenerator {
 
     // Name to change
-    private static final String FILE = "EditNoteTest";
+    private static final String FILE = "CreateNoteTest";
 
     private static final String FILE_PATH = "src\\androidTest\\java\\esadrcanfer\\us\\alumno\\autotesting\\tests\\"+FILE+".java";
 
@@ -53,6 +53,10 @@ public class TextualUITestGenerator {
         cu.findAll(MethodDeclaration.class).forEach((md) -> {
             exploreMethods(md);
         });
+
+        System.out.println(objectTypes);
+        System.out.println(selectors);
+        System.out.println(texts);
         writerUtil.write(BuildConfig.APPLICATION_ID);
         writerUtil.write("-1");
         writerUtil.write(String.valueOf(objectTypes.size()));
@@ -60,6 +64,8 @@ public class TextualUITestGenerator {
             writerUtil.write(objectTypes.get(i)+","+" UiSelector"+"["+selectors.get(i)+"]"+", "+texts.get(i).substring(1, texts.get(i).length() - 1));
         }
         writerUtil.write("finalState.contains(testActions[1].value)");
+
+
     }
 
     public void exploreMethods(MethodDeclaration md) {
@@ -78,6 +84,10 @@ public class TextualUITestGenerator {
 
     private void processActionAndSelectors(MethodCallExpr mc) {
         for(int i = 0; i < mc.getArguments().size(); i++){
+            if(!mc.getName().equals("withText") && mc.getParentNode().toString().startsWith("Optional[appCompatCheckedTextView") && mc.getParentNode().toString().contains(".atPosition")){
+                selectors.add("POSITION=" + mc.getArguments().toString().substring(1, mc.getArguments().toString().length() - 1));
+            }
+
             if((mc.getParentNode().toString().startsWith("Optional[allOf") || mc.getParentNode().toString().startsWith("Optional[Matchers.allOf"))  && mc.getParentNode().toString().contains("isDisplayed()")) {
 
                 if (mc.getName().toString().equals("withId")) {
@@ -88,17 +98,26 @@ public class TextualUITestGenerator {
                 }
             }
             if(mc.getName().toString().equals("perform")){
-                if(mc.getArgument(i).toString().equals("click()")){
-                    objectTypes.add("BUTTON");
+                if(mc.getScope().toString().contains("appCompatCheckBox")){
+                    objectTypes.add("CHECKBOX");
                 }
-                if(mc.getArgument(i).toString().equals("closeSoftKeyboard()")){
-                    selectors.remove(selectors.size() - 1);
-                    texts.remove(texts.size() - 1);
+                if(mc.getScope().toString().contains("appCompatRadioButton")){
+                    objectTypes.add("RADIO_BUTTON");
+                }
+                if(mc.getScope().toString().contains("appCompatSpinner")){
+                    objectTypes.add("SPINNER");
+                    texts.add("  ");
+                }
+                if(mc.getScope().toString().contains("appCompatCheckedTextView")){
+                    objectTypes.add("CHECKED_TEXT");
+                    texts.add("  ");
+                }
+                if(mc.getScope().toString().contains("appCompatButton")){
+                    objectTypes.add("BUTTON");
                 }
             }
             if(mc.getName().toString().equals("replaceText")){
                 objectTypes.add("TEXT");
-                texts.remove(texts.size() - 1);
                 texts.add(mc.getArgument(i).toString());
             }
         }

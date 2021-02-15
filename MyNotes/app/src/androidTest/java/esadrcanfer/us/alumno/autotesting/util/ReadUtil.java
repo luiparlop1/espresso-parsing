@@ -1,5 +1,6 @@
 package esadrcanfer.us.alumno.autotesting.util;
 
+import android.content.Intent;
 import android.os.Environment;
 import android.os.TestLooperManager;
 import android.util.Log;
@@ -25,11 +26,13 @@ import esadrcanfer.us.alumno.autotesting.inagraph.StartAppAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.ButtonAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.CheckBoxAction;
+import esadrcanfer.us.alumno.autotesting.inagraph.actions.CheckedTextAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.CountDownAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.RadioButtonAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.RadioButtonInputGenerator;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.ScrollDownAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.ScrollUpAction;
+import esadrcanfer.us.alumno.autotesting.inagraph.actions.SpinnerAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.TextInputAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.TextInputGenerator;
 
@@ -129,6 +132,8 @@ public class ReadUtil {
             object = new UiObject(new UiSelector().textContains(resourceId));
         else if (selectorType.equals("SCROLLABLE"))
             object = new UiObject(new UiSelector().scrollable(!type.equals("SCROLL_DOWN")));
+        else if (selectorType.equals("POSITION"))
+            object = new UiObject(new UiSelector().className("android.widget.CheckedTextView").index(Integer.parseInt(resourceId)));
         switch (type) {
             case "BUTTON":
                 res = new ButtonAction(object);
@@ -152,6 +157,12 @@ public class ReadUtil {
                 break;
             case "COUNT_DOWN":
                 res = new CountDownAction(object);
+                break;
+            case "SPINNER":
+                res = new SpinnerAction(object);
+                break;
+            case "CHECKED_TEXT":
+                res = new CheckedTextAction(object);
         }
         Log.d("ISA", "Action: " + action);
         Log.d("ISA", "Value: " + value);
@@ -191,6 +202,12 @@ public class ReadUtil {
                 break;
             case "COUNT_DOWN":
                 res = new CountDownAction(object);
+                break;
+            case "SPINNER":
+                res = new SpinnerAction(object);
+                break;
+            case "CHECKED_TEXT":
+                res = new CheckedTextAction(object);
         }
         return res;
     }

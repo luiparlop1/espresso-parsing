@@ -25,37 +25,60 @@ import esadrcanfer.us.alumno.autotesting.R;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class DeleteNoteTest {
+public class RadioButtonTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void deleteNoteTest2() {
+    public void radioButtonTest() {
         ViewInteraction appCompatButton = onView(
-                Matchers.allOf(ViewMatchers.withId(R.id.editButton), withText("Edit"),
-                        childAtPosition(
-                                withParent(withId(R.id.listView1)),
-                                1),
-                        isDisplayed()));
-        appCompatButton.perform(click());
-
-        ViewInteraction appCompatButton2 = onView(
-                allOf(withId(R.id.button2), withText("Delete"),
+                Matchers.allOf(ViewMatchers.withId(R.id.button), withText("Create note"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                4),
+                                2),
                         isDisplayed()));
-        appCompatButton2.perform(click());
+        appCompatButton.perform(click());
+
+        ViewInteraction appCompatRadioButton = onView(
+                allOf(withId(R.id.idRadio1), withText("Critica"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.RelativeLayout")),
+                                        6),
+                                0),
+                        isDisplayed()));
+        appCompatRadioButton.perform(click());
+
+        ViewInteraction appCompatRadioButton2 = onView(
+                allOf(withId(R.id.idRadio2), withText("Importante"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.RelativeLayout")),
+                                        6),
+                                1),
+                        isDisplayed()));
+        appCompatRadioButton2.perform(click());
+
+        ViewInteraction appCompatRadioButton3 = onView(
+                allOf(withId(R.id.idRadio3), withText("Rutinaria"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.RelativeLayout")),
+                                        6),
+                                2),
+                        isDisplayed()));
+        appCompatRadioButton3.perform(click());
     }
 
     private static Matcher<View> childAtPosition(
