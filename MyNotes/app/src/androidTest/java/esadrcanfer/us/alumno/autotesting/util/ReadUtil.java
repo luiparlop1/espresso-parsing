@@ -30,8 +30,7 @@ import esadrcanfer.us.alumno.autotesting.inagraph.actions.CheckedTextAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.CountDownAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.RadioButtonAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.RadioButtonInputGenerator;
-import esadrcanfer.us.alumno.autotesting.inagraph.actions.ScrollDownAction;
-import esadrcanfer.us.alumno.autotesting.inagraph.actions.ScrollUpAction;
+import esadrcanfer.us.alumno.autotesting.inagraph.actions.ScrollToAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.SpinnerAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.TextInputAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.TextInputGenerator;
@@ -149,11 +148,8 @@ public class ReadUtil {
                 RadioButtonInputGenerator radioButtonInputGenerator = new RadioButtonInputGenerator(seed);
                 res = new RadioButtonAction(object, radioButtonInputGenerator);
                 break;
-            case "SCROLL_DOWN":
-                res = new ScrollDownAction(object);
-                break;
-            case "SCROLL_UP":
-                res = new ScrollUpAction(object);
+            case "SCROLL_TO":
+                res = new ScrollToAction(object);
                 break;
             case "COUNT_DOWN":
                 res = new CountDownAction(object);
@@ -194,11 +190,8 @@ public class ReadUtil {
                 RadioButtonInputGenerator radioButtonInputGenerator = new RadioButtonInputGenerator(seed);
                 res = new RadioButtonAction(object, radioButtonInputGenerator);
                 break;
-            case "SCROLL_DOWN":
-                res = new ScrollDownAction(object);
-                break;
-            case "SCROLL_UP":
-                res = new ScrollUpAction(object);
+            case "SCROLL_TO":
+                res = new ScrollToAction(object);
                 break;
             case "COUNT_DOWN":
                 res = new CountDownAction(object);

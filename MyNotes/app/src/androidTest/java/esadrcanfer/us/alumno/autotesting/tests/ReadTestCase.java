@@ -19,7 +19,7 @@ public class ReadTestCase {
     @Test
     public void read() throws UiObjectNotFoundException {
         UiDevice.getInstance(getInstrumentation());
-        ReadUtil readUtil = new ReadUtil("Download/CreateNoteTest.txt", true);
+        ReadUtil readUtil = new ReadUtil("Download/ScrollTest.txt", true);
         TestCase testCase = readUtil.generateTestCase();
         Log.d("TFG","Test case found: "+testCase);
         Log.d("TFG","Runnig it...");
