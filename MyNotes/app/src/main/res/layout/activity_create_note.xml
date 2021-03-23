@@ -11,10 +11,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:baselineAligned="false">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="635dp"
+            android:baselineAligned="false">
 
             <TextView
                 android:id="@+id/textView2"
@@ -166,7 +166,7 @@
                 android:layout_below="@+id/linearLayout1"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginTop="392dp"
+                android:layout_marginTop="431dp"
                 android:onClick="save"
                 android:text="Save" />
 
@@ -180,8 +180,18 @@
                 android:onClick="cancel"
                 android:text="Cancel" />
 
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="115dp"
+                android:onClick="onSwitchClicked"
+                android:text="Alarma" />
 
-    </RelativeLayout>
+
+        </RelativeLayout>
 
     </LinearLayout>
 

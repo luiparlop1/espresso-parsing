@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final ListView listview = (ListView) findViewById(R.id.listView1);
-        final NotesAdapter adapter = new NotesAdapter(this, NoteStore.getNotes(), NoteStore.getSelectedItems(), NoteStore.getSelectedRads(), NoteStore.getSelectedOption1(), NoteStore.getSelectedOption2(), NoteStore.getSelectedOption3());
+        final NotesAdapter adapter = new NotesAdapter(this, NoteStore.getNotes(), NoteStore.getSelectedItems(), NoteStore.getSelectedRads(), NoteStore.getSelectedOption1(), NoteStore.getSelectedOption2(), NoteStore.getSelectedOption3(), NoteStore.getSelectedSwitches());
         listview.setAdapter(adapter);
     }
 

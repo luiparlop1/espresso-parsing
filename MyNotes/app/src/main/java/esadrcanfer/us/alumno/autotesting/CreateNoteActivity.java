@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class CreateNoteActivity extends AppCompatActivity implements AdapterView
 
     RadioButton r1, r2, r3;
     CheckBox c1, c2, c3;
+    Switch aSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,8 @@ public class CreateNoteActivity extends AppCompatActivity implements AdapterView
         c1 = (CheckBox) findViewById(R.id.checkBox);
         c2 = (CheckBox) findViewById(R.id.checkBox2);
         c3 = (CheckBox) findViewById(R.id.checkBox3);
+
+        aSwitch = (Switch) findViewById(R.id.switch1);
     }
 
     public void save(View view) {
@@ -67,7 +71,7 @@ public class CreateNoteActivity extends AppCompatActivity implements AdapterView
                 radStr = r3.getText().toString();
             }
 
-            NoteStore.addNotes(edit.getText().toString(), itemStr, radStr, c1.isChecked(), c2.isChecked(), c3.isChecked());
+            NoteStore.addNotes(edit.getText().toString(), itemStr, radStr, c1.isChecked(), c2.isChecked(), c3.isChecked(), aSwitch.isChecked());
 
             Intent intent = new Intent(view.getContext(), MainActivity.class);
             intent.putExtra("data", itemStr);
@@ -75,6 +79,7 @@ public class CreateNoteActivity extends AppCompatActivity implements AdapterView
             intent.putExtra("boxChosen1", c1.isChecked());
             intent.putExtra("boxChosen2", c2.isChecked());
             intent.putExtra("boxChosen3", c3.isChecked());
+            intent.putExtra("switchChosen", aSwitch.isChecked());
 
             startActivityForResult(intent, 0);
             finish();
@@ -130,5 +135,17 @@ public class CreateNoteActivity extends AppCompatActivity implements AdapterView
         }
 
         Toast.makeText(this, checkStr, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onSwitchClicked(View view) {
+        String switchText = null;
+
+        if(aSwitch.isChecked()){
+            switchText = "Alarma activada";
+        }else{
+            switchText = "Alarma desactivada";
+        }
+
+        Toast.makeText(this, switchText, Toast.LENGTH_SHORT).show();
     }
 }

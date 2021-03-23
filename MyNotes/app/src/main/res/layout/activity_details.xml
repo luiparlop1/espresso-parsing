@@ -166,9 +166,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/linearLayout1"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="392dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="437dp"
+                android:layout_marginEnd="0dp"
                 android:onClick="save"
                 android:text="Save" />
 
@@ -191,6 +191,16 @@
                 android:layout_centerInParent="true"
                 android:onClick="delete"
                 android:text="Delete" />
+
+            <Switch
+                android:id="@+id/switch3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/checkBox3"
+                android:layout_marginBottom="-43dp"
+                android:onClick="onSwitchClicked"
+                android:text="Alarma" />
+
 
         </RelativeLayout>
     </LinearLayout>

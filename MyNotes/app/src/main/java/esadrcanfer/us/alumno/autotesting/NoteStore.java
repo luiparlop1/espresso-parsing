@@ -10,11 +10,12 @@ public class NoteStore {
     private static List<Boolean> selectedOption1;
     private static List<Boolean> selectedOption2;
     private static List<Boolean> selectedOption3;
+    private static List<Boolean> selectedSwitches;
 
 
 
     public static List<String> getNotes(){
-        if(notes == null && selectedItems == null && selectedRads == null && selectedOption1 == null && selectedOption2 == null && selectedOption3 == null){
+        if(notes == null && selectedItems == null && selectedRads == null && selectedOption1 == null && selectedOption2 == null && selectedOption3 == null && selectedSwitches == null){
             notes = new ArrayList<>();
             notes.add("My first note");
 
@@ -32,6 +33,9 @@ public class NoteStore {
 
             selectedOption3 = new ArrayList<>();
             selectedOption3.add(false);
+
+            selectedSwitches = new ArrayList<>();
+            selectedSwitches.add(false);
         }
         return new ArrayList<>(notes);
     }
@@ -56,8 +60,13 @@ public class NoteStore {
         return selectedOption3;
     }
 
-    public static void addNotes(String note, String item, String rad, Boolean firstBox, Boolean secondBox, Boolean thirdBox){
-        if(notes == null && selectedItems == null && selectedRads == null && selectedOption1 == null && selectedOption2 == null && selectedOption3 == null){
+    public static List<Boolean> getSelectedSwitches() {
+        return selectedSwitches;
+    }
+
+
+    public static void addNotes(String note, String item, String rad, Boolean firstBox, Boolean secondBox, Boolean thirdBox, Boolean aSwitch){
+        if(notes == null && selectedItems == null && selectedRads == null && selectedOption1 == null && selectedOption2 == null && selectedOption3 == null && selectedSwitches == null){
             notes = new ArrayList<>();
             notes.add("My first note");
 
@@ -75,6 +84,9 @@ public class NoteStore {
 
             selectedOption3 = new ArrayList<>();
             selectedOption3.add(false);
+
+            selectedSwitches = new ArrayList<>();
+            selectedSwitches.add(false);
         }
         notes.add(note);
         selectedItems.add(item);
@@ -82,15 +94,17 @@ public class NoteStore {
         selectedOption1.add(firstBox);
         selectedOption2.add(secondBox);
         selectedOption3.add(thirdBox);
+        selectedSwitches.add(aSwitch);
     }
 
-    public static void updateNote(String note, Integer pos, String item, String rad, Boolean firstBox, Boolean secondBox, Boolean thirdBox){
+    public static void updateNote(String note, Integer pos, String item, String rad, Boolean firstBox, Boolean secondBox, Boolean thirdBox, Boolean aSwitch){
         notes.set(pos, note);
         selectedItems.set(pos, item);
         selectedRads.set(pos, rad);
         selectedOption1.set(pos, firstBox);
         selectedOption2.set(pos, secondBox);
         selectedOption3.set(pos, thirdBox);
+        selectedSwitches.set(pos, aSwitch);
     }
 
     public static void deleteNote(String note, Integer pos){
@@ -100,5 +114,6 @@ public class NoteStore {
         selectedOption1.remove(selectedOption1.get(pos));
         selectedOption2.remove(selectedOption2.get(pos));
         selectedOption3.remove(selectedOption3.get(pos));
+        selectedSwitches.remove(selectedSwitches.get(pos));
     }
 }
