@@ -32,6 +32,7 @@ import esadrcanfer.us.alumno.autotesting.inagraph.actions.RadioButtonAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.RadioButtonInputGenerator;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.ScrollToAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.SpinnerAction;
+import esadrcanfer.us.alumno.autotesting.inagraph.actions.SwitchAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.TextInputAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.TextInputGenerator;
 
@@ -159,6 +160,9 @@ public class ReadUtil {
                 break;
             case "CHECKED_TEXT":
                 res = new CheckedTextAction(object);
+                break;
+            case "SWITCH":
+                res = new SwitchAction(object);
         }
         Log.d("ISA", "Action: " + action);
         Log.d("ISA", "Value: " + value);
@@ -201,6 +205,9 @@ public class ReadUtil {
                 break;
             case "CHECKED_TEXT":
                 res = new CheckedTextAction(object);
+                break;
+            case "SWITCH":
+                res = new SwitchAction(object);
         }
         return res;
     }

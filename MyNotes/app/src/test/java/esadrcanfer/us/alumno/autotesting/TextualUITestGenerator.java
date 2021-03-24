@@ -29,7 +29,7 @@ import java.util.Optional;
 public class TextualUITestGenerator {
 
     // Name to change
-    private static final String FILE = "MainActivityTest3";
+    private static final String FILE = "CreateNoteTest";
 
     private static final String FILE_PATH = "src\\androidTest\\java\\esadrcanfer\\us\\alumno\\autotesting\\tests\\"+FILE+".java";
 
@@ -38,9 +38,9 @@ public class TextualUITestGenerator {
     private List<String> objectTypes = new ArrayList<>();
     private List<String> selectors = new ArrayList<>();
     private List<String> texts = new ArrayList<>();
-    private Boolean isReplacingAnExistingText = false;
     private String tempId;
-    private Boolean notSwap = false;
+    private Boolean notSwap = true;
+    private int replacingCount = 0;
 
     @Test
     public void textualUITestGenerator() throws FileNotFoundException {
@@ -60,18 +60,13 @@ public class TextualUITestGenerator {
             exploreMethods(md);
         });
 
-        System.out.println(objectTypes);
-        System.out.println(selectors);
-        System.out.println(texts);
-
-        /*writerUtil.write(BuildConfig.APPLICATION_ID);
+        writerUtil.write(BuildConfig.APPLICATION_ID);
         writerUtil.write("-1");
         writerUtil.write(String.valueOf(objectTypes.size()));
         for(int i = 0; i < objectTypes.size(); i++){
             writerUtil.write(objectTypes.get(i)+","+" UiSelector"+"["+selectors.get(i)+"]"+", "+texts.get(i));
         }
         writerUtil.write("finalState.contains(testActions[1].value)");
-        */
 
     }
 
@@ -98,19 +93,20 @@ public class TextualUITestGenerator {
     private void processVariableDesclaration(VariableDeclarationExpr vde) {
         for(int i = 0; i < vde.getVariables().size(); i++){
             if(vde.getVariable(i).getName().toString().startsWith("appCompatEditText") && vde.getVariable(i).toString().contains("withText")){
-                isReplacingAnExistingText = true;
+                replacingCount++;
             }
         }
     }
 
     private void processActionAndSelectors(MethodCallExpr mc, List<String> childs) {
-
         if(mc.getName().toString().equals("scrollTo")){
             objectTypes.add("SCROLL_TO");
             selectors.add("RESOURCE_ID=");
             texts.add(this.tempId);
-            Collections.swap(selectors,selectors.size() -1, selectors.size() -2);
-            if(!notSwap){
+            if(!selectors.isEmpty()) {
+                Collections.swap(selectors,selectors.size() -1, selectors.size() -2);
+            }
+            if(!texts.isEmpty()){
                 Collections.swap(texts,texts.size() -1, texts.size() -2);
             }
             notSwap = false;
@@ -125,25 +121,34 @@ public class TextualUITestGenerator {
             }
             if(mc.getParentNode().toString().contains("appCompatSpinner")){
                 objectTypes.add("SPINNER");
+                if(!notSwap && !texts.isEmpty()){
+                    Collections.swap(texts,texts.size() -1, texts.size() -2);
+                }
                 texts.add("  ");
             }
             if(mc.getParentNode().toString().contains("appCompatCheckedTextView")){
                 objectTypes.add("CHECKED_TEXT");
                 texts.add("  ");
             }
+            if(mc.getParentNode().toString().contains("switch")){
+                objectTypes.add("SWITCH");
+            }
             if(mc.getParentNode().toString().contains("appCompatButton") || mc.getParentNode().toString().contains("materialButton")){
                 objectTypes.add("BUTTON");
             }
         }
 
+        if (mc.getName().toString().equals("atPosition")) {
+            selectors.add("POSITION=" + mc.getArguments().toString().substring(1, mc.getArguments().toString().length() - 1));
+        }
+
+        if(mc.getName().toString().equals("click") && mc.getParentNode().toString().startsWith("Optional[appCompatEditText")){
+            objectTypes.add("TEXT");
+        }
+
         if(mc.toString().startsWith("childAtPosition")){
             childs.add(mc.toString());
         }
-
-
-        System.out.println(mc.getName() + " + " + mc.toString() + " + " + mc.getArguments());
-
-
 
         for(int i = 0; i < mc.getArguments().size(); i++){
             Boolean isChild = false;
@@ -154,12 +159,6 @@ public class TextualUITestGenerator {
             }
 
             if(isChild == false){
-                if(!mc.getName().equals("withText") && mc.getParentNode().toString().startsWith("Optional[appCompatCheckedTextView") && mc.getParentNode().toString().contains(".atPosition")){
-                    selectors.add("POSITION=" + mc.getArguments().toString().substring(1, mc.getArguments().toString().length() - 1));
-                }
-
-
-
                 if (mc.getName().toString().equals("withId")) {
                     selectors.add("RESOURCE_ID=" + BuildConfig.APPLICATION_ID + ":id/" + mc.getArguments().get(i).toString().substring(5));
                     this.tempId = "toElementById=" + mc.getArgument(i).toString().substring(5);
@@ -171,25 +170,20 @@ public class TextualUITestGenerator {
 
                 if(mc.getName().toString().equals("replaceText")){
                     objectTypes.add("TEXT");
-                    if(isReplacingAnExistingText.equals(true)){
+                    if(!(replacingCount == 0)){
                         texts.remove(texts.size() - 1);
+                    }else if (notSwap == false && !texts.isEmpty()){
+                        Collections.swap(texts,texts.size() -1, texts.size() -2);
                     }
                     texts.add(mc.getArguments().get(i).toString().substring(1, mc.getArgument(i).toString().length() - 1));
-                    isReplacingAnExistingText = false;
-                    notSwap = true;
+                    replacingCount--;
                 }
-
-                /*if(mc.getArgument(i).toString().equals("scrollTo()") && !mc.getScope().toString().contains("appCompatEditText")){
-                    objectTypes.remove(objectTypes.size() - 1);
-                    if(mc.getScope().toString().contains("appCompatSpinner")){
-                        texts.remove(texts.size() - 1);
-                    }
-                }*/
             }
 
             if(mc.getArguments().toString().equals("[closeSoftKeyboard()]")){
                 selectors.remove(selectors.size() - 1);
                 texts.remove(texts.size() - 1);
+                replacingCount--;
             }
         }
     }
