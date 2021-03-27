@@ -113,10 +113,10 @@ public class TextualUITestGenerator {
 
         }else if(mc.getName().toString().equals("click")){
 
-            if(mc.getParentNode().toString().contains("appCompatCheckBox")){
+            if(mc.getParentNode().toString().contains("appCompatCheckBox") || mc.getParentNode().toString().contains("materialCheckBox")){
                 objectTypes.add("CHECKBOX");
             }
-            if(mc.getParentNode().toString().contains("appCompatRadioButton")){
+            if(mc.getParentNode().toString().contains("appCompatRadioButton") || mc.getParentNode().toString().contains("materialRadioButton")){
                 objectTypes.add("RADIO_BUTTON");
             }
             if(mc.getParentNode().toString().contains("appCompatSpinner")){
@@ -133,7 +133,18 @@ public class TextualUITestGenerator {
             if(mc.getParentNode().toString().contains("switch")){
                 objectTypes.add("SWITCH");
             }
-            if(mc.getParentNode().toString().contains("appCompatButton") || mc.getParentNode().toString().contains("materialButton")){
+            if(mc.getParentNode().toString().contains("appCompatButton") || mc.getParentNode().toString().contains("materialButton")
+                    || mc.getParentNode().toString().contains("floatingActionButton") || mc.getParentNode().toString().contains("appCompatToggleButton")
+                    || mc.getParentNode().toString().contains("appCompatImageButton")
+                    || mc.getParentNode().toString().contains("bottomNavigationItemView")
+                    || mc.getParentNode().toString().contains("materialCardView")
+                    || mc.getParentNode().toString().contains("chip")
+                    || mc.getParentNode().toString().contains("materialTextView")
+                    || mc.getParentNode().toString().contains("actionMenuItemView")
+                    || mc.getParentNode().toString().contains("navigationRailItemView")
+                    || mc.getParentNode().toString().contains("tabView")
+                    || mc.getParentNode().toString().contains("actionMenuItemView")
+                    || mc.getParentNode().toString().contains("overflowMenuButton")){
                 objectTypes.add("BUTTON");
             }
         }
