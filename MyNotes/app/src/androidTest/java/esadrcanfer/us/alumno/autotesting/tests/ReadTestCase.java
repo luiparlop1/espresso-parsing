@@ -8,10 +8,14 @@ import org.junit.runner.RunWith;
 
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObjectNotFoundException;
+
+import java.util.List;
+
 import esadrcanfer.us.alumno.autotesting.TestCase;
 import esadrcanfer.us.alumno.autotesting.util.ReadUtil;
 
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+import static esadrcanfer.us.alumno.autotesting.tests.AutomaticRepairTests.labelsDetection;
 
 @RunWith(AndroidJUnit4.class)
 public class ReadTestCase {
@@ -19,13 +23,21 @@ public class ReadTestCase {
     @Test
     public void read() throws UiObjectNotFoundException {
         UiDevice.getInstance(getInstrumentation());
-        ReadUtil readUtil = new ReadUtil("Download/EditNoteTest.txt", true);
+        ReadUtil readUtil = new ReadUtil("Download/TestCase-20210411_180755.txt", true);
         TestCase testCase = readUtil.generateTestCase();
         Log.d("TFG","Test case found: "+testCase);
         Log.d("TFG","Runnig it...");
         testCase.executeBefore();
+        List<String> initialState = labelsDetection();
         testCase.executeTest();
+        List<String> finalState = labelsDetection();
+        testCase.setInitialState(initialState);
+        testCase.setFinalState(finalState);
+        Boolean eval = testCase.evaluate();
+        Log.d("ISA", "Initial evaluation: " + eval.toString());
         testCase.executeAfter();
-        Log.d("TFG","Done!");
+        if(eval.equals(false)){
+            throw new IllegalArgumentException("The assertion '" + testCase.getPredicate() + "' is not true");
+        }
     }
 }

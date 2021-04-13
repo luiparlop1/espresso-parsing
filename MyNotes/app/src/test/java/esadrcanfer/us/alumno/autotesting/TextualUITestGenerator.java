@@ -29,7 +29,7 @@ import java.util.Optional;
 public class TextualUITestGenerator {
 
     // Name to change
-    private static final String FILE = "CreateNoteTest";
+    private static final String FILE = "MainActivityTest2";
 
     private static final String FILE_PATH = "src\\androidTest\\java\\esadrcanfer\\us\\alumno\\autotesting\\tests\\"+FILE+".java";
 
@@ -41,6 +41,10 @@ public class TextualUITestGenerator {
     private String tempId;
     private Boolean notSwap = true;
     private int replacingCount = 0;
+    private String predicate;
+    private String objectId;
+    private Boolean isMatchingText = false;
+    private Boolean isObjectType = false;
 
     @Test
     public void textualUITestGenerator() throws FileNotFoundException {
@@ -64,10 +68,9 @@ public class TextualUITestGenerator {
         writerUtil.write("-1");
         writerUtil.write(String.valueOf(objectTypes.size()));
         for(int i = 0; i < objectTypes.size(); i++){
-            writerUtil.write(objectTypes.get(i)+","+" UiSelector"+"["+selectors.get(i)+"]"+", "+texts.get(i));
+            writerUtil.write(objectTypes.get(i)+", "+"UiSelector"+"["+selectors.get(i)+"]"+", "+texts.get(i));
         }
-        writerUtil.write("finalState.contains(testActions[1].value)");
-
+        writerUtil.write(predicate);
     }
 
     public void exploreMethods(MethodDeclaration md) {
@@ -104,7 +107,6 @@ public class TextualUITestGenerator {
             selectors.add("RESOURCE_ID=");
             texts.add(this.tempId);
             if(!selectors.isEmpty()) {
-                Collections.swap(selectors,selectors.size() -1, selectors.size() -2);
             }
             if(!texts.isEmpty()){
                 Collections.swap(texts,texts.size() -1, texts.size() -2);
@@ -112,7 +114,8 @@ public class TextualUITestGenerator {
             notSwap = false;
 
         }else if(mc.getName().toString().equals("click")){
-
+            selectors.add(objectId);
+            isObjectType = true;
             if(mc.getParentNode().toString().contains("appCompatCheckBox") || mc.getParentNode().toString().contains("materialCheckBox")){
                 objectTypes.add("CHECKBOX");
             }
@@ -129,6 +132,7 @@ public class TextualUITestGenerator {
             if(mc.getParentNode().toString().contains("appCompatCheckedTextView")){
                 objectTypes.add("CHECKED_TEXT");
                 texts.add("  ");
+                selectors.remove(selectors.size() - 1);
             }
             if(mc.getParentNode().toString().contains("switch")){
                 objectTypes.add("SWITCH");
@@ -171,15 +175,21 @@ public class TextualUITestGenerator {
 
             if(isChild == false){
                 if (mc.getName().toString().equals("withId")) {
-                    selectors.add("RESOURCE_ID=" + BuildConfig.APPLICATION_ID + ":id/" + mc.getArguments().get(i).toString().substring(5));
+                    objectId = "RESOURCE_ID=" + BuildConfig.APPLICATION_ID + ":id/" + mc.getArguments().get(i).toString().substring(5);
                     this.tempId = "toElementById=" + mc.getArgument(i).toString().substring(5);
                 }
 
                 if (mc.getName().toString().equals("withText")) {
                     texts.add(mc.getArguments().get(i).toString().substring(1, mc.getArgument(i).toString().length() - 1));
+                    if (isMatchingText == true) {
+                        predicate = "finalState.contains(" + mc.getArgument(i).toString() + ")";
+                        texts.remove(texts.size() - 1);
+                        isMatchingText = false;
+                    }
                 }
 
                 if(mc.getName().toString().equals("replaceText")){
+                    selectors.add(objectId);
                     objectTypes.add("TEXT");
                     if(!(replacingCount == 0)){
                         texts.remove(texts.size() - 1);
@@ -195,6 +205,24 @@ public class TextualUITestGenerator {
                 selectors.remove(selectors.size() - 1);
                 texts.remove(texts.size() - 1);
                 replacingCount--;
+            }
+
+            if (mc.getName().toString().equals("check")) {
+                if(texts.size() == 1){
+                    texts.remove(0);
+                }
+                if(isObjectType){
+                    if (mc.getArgument(i).toString().equals("matches(isDisplayed())")){
+                        predicate = "finalState.contains(" + '"' + texts.get(texts.size() - 1) + '"' + ")";
+                    }
+                    texts.remove(texts.size() - 1);
+                }
+                if(mc.getArgument(i).toString().startsWith("matches(withText(")){
+                    isMatchingText = true;
+                }
+                if(mc.getArgument(i).toString().equals("doesNotExist()")){
+                    predicate = "finalState.size() < initialState.size()";
+                }
             }
         }
     }

@@ -116,7 +116,7 @@ public class ReadUtil {
     }
 
     public Action generateActionFromString(String action, Long seed){
-        String[] splitAction = action.split(","); // Dividir la cadena por comas
+        String[] splitAction = action.split(", "); // Dividir la cadena por comas
         String type = splitAction[0];       // Seleccionar el tipo de objeto (botón, cuadro de texto, radio button, etc.)
         String resourceId = splitAction[1]; // Selector del objeto sobre el que actuar
         String value = splitAction.length==2?"":splitAction[2];      // Valor a usar para realizar la acción
