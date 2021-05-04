@@ -3,6 +3,7 @@ package esadrcanfer.us.alumno.autotesting.tests;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import android.util.Log;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -23,7 +24,7 @@ public class ReadTestCase {
     @Test
     public void read() throws UiObjectNotFoundException {
         UiDevice.getInstance(getInstrumentation());
-        ReadUtil readUtil = new ReadUtil("Download/TestCase-20210411_180755.txt", true);
+        ReadUtil readUtil = new ReadUtil("Download/SinAssertion.txt", true);
         TestCase testCase = readUtil.generateTestCase();
         Log.d("TFG","Test case found: "+testCase);
         Log.d("TFG","Runnig it...");
@@ -36,8 +37,8 @@ public class ReadTestCase {
         Boolean eval = testCase.evaluate();
         Log.d("ISA", "Initial evaluation: " + eval.toString());
         testCase.executeAfter();
-        if(eval.equals(false)){
-            throw new IllegalArgumentException("The assertion '" + testCase.getPredicate() + "' is not true");
+        if (eval.equals(false)) {
+            Assert.fail("The assertion '" + testCase.getPredicate() + "' is not true");
         }
     }
 }

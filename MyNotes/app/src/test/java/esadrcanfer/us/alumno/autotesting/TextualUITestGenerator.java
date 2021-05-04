@@ -2,7 +2,6 @@ package esadrcanfer.us.alumno.autotesting;
 
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.MethodCallExpr;
@@ -14,13 +13,12 @@ import com.github.javaparser.symbolsolver.model.resolution.TypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.CombinedTypeSolver;
 import com.google.common.collect.Lists;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -70,7 +68,11 @@ public class TextualUITestGenerator {
         for(int i = 0; i < objectTypes.size(); i++){
             writerUtil.write(objectTypes.get(i)+", "+"UiSelector"+"["+selectors.get(i)+"]"+", "+texts.get(i));
         }
-        writerUtil.write(predicate);
+        if (predicate != null) {
+            writerUtil.write(predicate);
+        } else {
+            Assert.fail("You must provide an assertion");
+        }
     }
 
     public void exploreMethods(MethodDeclaration md) {
@@ -95,7 +97,7 @@ public class TextualUITestGenerator {
 
     private void processVariableDesclaration(VariableDeclarationExpr vde) {
         for(int i = 0; i < vde.getVariables().size(); i++){
-            if(vde.getVariable(i).getName().toString().startsWith("appCompatEditText") && vde.getVariable(i).toString().contains("withText")){
+            if((vde.getVariable(i).getName().toString().startsWith("appCompatEditText") || vde.getVariable(i).getName().toString().startsWith("editText")) && vde.getVariable(i).toString().contains("withText")){
                 replacingCount++;
             }
         }
@@ -106,8 +108,6 @@ public class TextualUITestGenerator {
             objectTypes.add("SCROLL_TO");
             selectors.add("RESOURCE_ID=");
             texts.add(this.tempId);
-            if(!selectors.isEmpty()) {
-            }
             if(!texts.isEmpty()){
                 Collections.swap(texts,texts.size() -1, texts.size() -2);
             }
@@ -116,20 +116,20 @@ public class TextualUITestGenerator {
         }else if(mc.getName().toString().equals("click")){
             selectors.add(objectId);
             isObjectType = true;
-            if(mc.getParentNode().toString().contains("appCompatCheckBox") || mc.getParentNode().toString().contains("materialCheckBox")){
+            if(mc.getParentNode().toString().contains("appCompatCheckBox") || mc.getParentNode().toString().contains("materialCheckBox") || mc.getParentNode().toString().contains("checkBox")){
                 objectTypes.add("CHECKBOX");
             }
-            if(mc.getParentNode().toString().contains("appCompatRadioButton") || mc.getParentNode().toString().contains("materialRadioButton")){
+            if(mc.getParentNode().toString().contains("appCompatRadioButton") || mc.getParentNode().toString().contains("materialRadioButton") || mc.getParentNode().toString().contains("radioButton")){
                 objectTypes.add("RADIO_BUTTON");
             }
-            if(mc.getParentNode().toString().contains("appCompatSpinner")){
+            if(mc.getParentNode().toString().contains("appCompatSpinner") || mc.getParentNode().toString().contains("spinner")){
                 objectTypes.add("SPINNER");
                 if(!notSwap && !texts.isEmpty()){
                     Collections.swap(texts,texts.size() -1, texts.size() -2);
                 }
                 texts.add("  ");
             }
-            if(mc.getParentNode().toString().contains("appCompatCheckedTextView")){
+            if(mc.getParentNode().toString().contains("appCompatCheckedTextView") || mc.getParentNode().toString().contains("checkedTextView")){
                 objectTypes.add("CHECKED_TEXT");
                 texts.add("  ");
                 selectors.remove(selectors.size() - 1);
@@ -148,7 +148,8 @@ public class TextualUITestGenerator {
                     || mc.getParentNode().toString().contains("navigationRailItemView")
                     || mc.getParentNode().toString().contains("tabView")
                     || mc.getParentNode().toString().contains("actionMenuItemView")
-                    || mc.getParentNode().toString().contains("overflowMenuButton")){
+                    || mc.getParentNode().toString().contains("overflowMenuButton")
+                    || mc.getParentNode().toString().contains("button")){
                 objectTypes.add("BUTTON");
             }
         }
@@ -157,7 +158,7 @@ public class TextualUITestGenerator {
             selectors.add("POSITION=" + mc.getArguments().toString().substring(1, mc.getArguments().toString().length() - 1));
         }
 
-        if(mc.getName().toString().equals("click") && mc.getParentNode().toString().startsWith("Optional[appCompatEditText")){
+        if(mc.getName().toString().equals("click") && (mc.getParentNode().toString().startsWith("Optional[appCompatEditText") || mc.getParentNode().toString().startsWith("Optional[editText"))){
             objectTypes.add("TEXT");
         }
 

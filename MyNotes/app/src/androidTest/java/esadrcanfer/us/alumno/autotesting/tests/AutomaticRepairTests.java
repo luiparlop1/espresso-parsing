@@ -1,6 +1,13 @@
 package esadrcanfer.us.alumno.autotesting.tests;
 
 import android.util.Log;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CheckedTextView;
+import android.widget.RadioButton;
+import android.widget.ScrollView;
+import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import org.junit.Test;
@@ -373,7 +380,13 @@ public class AutomaticRepairTests {
         UiDevice device = UiDevice.getInstance(getInstrumentation());
         List<String> finalState = new ArrayList<>();
         List<UiObject2> elements = device.findObjects(By.clazz(TextView.class));
-        for (UiObject2 label : elements) {
+        elements.addAll(device.findObjects(By.clazz(CheckBox.class)));
+        elements.addAll(device.findObjects(By.clazz(Button.class)));
+        elements.addAll(device.findObjects(By.clazz(RadioButton.class)));
+        elements.addAll(device.findObjects(By.clazz(ScrollView.class)));
+        elements.addAll(device.findObjects(By.clazz(Spinner.class)));
+        elements.addAll(device.findObjects(By.clazz(CheckedTextView.class)));
+        elements.addAll(device.findObjects(By.clazz(Switch.class)));        for (UiObject2 label : elements) {
             String text = label.getText();
             //Solución básica, hay que mejorarla
             if (text!=null && (!(text.contains(":") || text.contains("%")))) {

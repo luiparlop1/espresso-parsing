@@ -173,7 +173,7 @@ public class ReadUtil {
     public static Action generateActionFromSimpleString(String action, Long seed){
         Log.d("ISA", action);
         String value = null;
-        String[] splitAction = action.split(",");
+        String[] splitAction = action.split(", ");
         String type = splitAction[0];
         String resourceId = splitAction[1];
         resourceId = splitAction[1].substring(resourceId.indexOf("=") + 1 ,resourceId.length()-1);
