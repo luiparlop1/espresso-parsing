@@ -1,5 +1,4 @@
 package esadrcanfer.us.alumno.autotesting;
-
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
@@ -27,9 +26,9 @@ import java.util.Optional;
 public class TextualUITestGenerator {
 
     // Name to change
-    private static final String FILE = "MainActivityTest2";
+    private static String FILE = "TestConverter";
 
-    private static final String FILE_PATH = "src\\androidTest\\java\\esadrcanfer\\us\\alumno\\autotesting\\tests\\"+FILE+".java";
+    private static String FILE_PATH = "src/test/java/esadrcanfer/us/alumno/autotesting/";
 
     WriterUtil writerUtil = new WriterUtil();
 
@@ -45,13 +44,16 @@ public class TextualUITestGenerator {
     private Boolean isObjectType = false;
 
     @Test
-    public void textualUITestGenerator() throws FileNotFoundException {
+    public void textualUITestGenerator(String className, String path, String applicationId) throws FileNotFoundException {
         // Parser configuration:
+        FILE=className;
+        FILE_PATH=path+FILE+".java";
         TypeSolver typeSolver = new CombinedTypeSolver();
         JavaSymbolSolver symbolSolver = new JavaSymbolSolver(typeSolver);
         StaticJavaParser.getConfiguration().setSymbolResolver(symbolSolver);
         // Parsing:
-        CompilationUnit cu = StaticJavaParser.parse(new File(FILE_PATH));
+        File file=new File(FILE_PATH);
+        CompilationUnit cu = StaticJavaParser.parse(file);
         Optional<ClassOrInterfaceDeclaration> fileParsed = cu.getClassByName(FILE);
         // We print the class to check that the class is correcly parsed
         //System.out.println(fileParsed);
@@ -70,8 +72,8 @@ public class TextualUITestGenerator {
         }
         if (predicate != null) {
             writerUtil.write(predicate);
-        } else {
-            Assert.fail("You must provide an assertion");
+       // } else {
+       //     Assert.fail("You must provide an assertion");
         }
     }
 

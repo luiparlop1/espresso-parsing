@@ -1,13 +1,12 @@
 package esadrcanfer.us.alumno.autotesting;
 
-import android.util.Log;
+import androidx.test.uiautomator.UiObjectNotFoundException;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import androidx.test.uiautomator.UiObjectNotFoundException;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
 
 
@@ -103,8 +102,12 @@ public class TestCase {
     }
 
     public boolean evaluate(){
+        if(predicate!=null){
         return predicate.evaluate(this);
+        }
+        return true;
     }
+
 
     @Override
     public String toString(){
@@ -147,6 +150,7 @@ public class TestCase {
     }
 
     public void setPredicate(String predicate){
+        if(predicate!=null) //Si no hay predicate, no lo hace.
         this.predicate = new TestPredicate(predicate);
     }
 

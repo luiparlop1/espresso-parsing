@@ -1,0 +1,17 @@
+esadrcanfer.us.alumno.autotesting
+-1
+14
+BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.autotesting:id/button], Create note
+SCROLL_TO, UiSelector[RESOURCE_ID=], toElementById=editText1
+TEXT, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.autotesting:id/editText1], PruebaNota
+SCROLL_TO, UiSelector[RESOURCE_ID=], toElementById=spinner1
+SPINNER, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.autotesting:id/spinner1],   
+CHECKED_TEXT, UiSelector[POSITION=1],   
+SCROLL_TO, UiSelector[RESOURCE_ID=], toElementById=idRadio2
+RADIO_BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.autotesting:id/idRadio2], Importante
+SCROLL_TO, UiSelector[RESOURCE_ID=], toElementById=checkBox3
+CHECKBOX, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.autotesting:id/checkBox3], Notificacion
+SCROLL_TO, UiSelector[RESOURCE_ID=], toElementById=switch1
+SWITCH, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.autotesting:id/switch1], Alarma
+SCROLL_TO, UiSelector[RESOURCE_ID=], toElementById=button
+BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.autotesting:id/button], Save

@@ -1,25 +1,21 @@
 package esadrcanfer.us.alumno.autotesting.util;
 
-import android.content.Intent;
 import android.os.Environment;
-import android.os.TestLooperManager;
 import android.util.Log;
-import android.widget.Toast;
 
-import junit.framework.Test;
+import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiSelector;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import androidx.test.uiautomator.UiObject;
-import androidx.test.uiautomator.UiSelector;
 import esadrcanfer.us.alumno.autotesting.TestCase;
 import esadrcanfer.us.alumno.autotesting.inagraph.CloseAppAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.StartAppAction;
@@ -77,9 +73,10 @@ public class ReadUtil {
         String[] lines = text.split("\n");
         String appPackage = lines[0];
         Long seed;
-        if(sameSeed){
+
+        if(sameSeed) {
             seed = new Long(lines[1]);
-        } else {
+        }else{
             seed = Math.abs(new Random().nextLong());
         }
         Integer actionsSize = new Integer(lines[2]);
@@ -96,7 +93,13 @@ public class ReadUtil {
                 break;
             }
         }
-        String predicate = lines[actionsSize+1];
+        String predicate = null; //Inicializo a null la aserción porque no tiene por qué haberlas siempre.
+        long numberOfLines = Arrays.stream(lines).count(); //Cuento el número de líneas del archivo
+        actionsSize = new Integer(lines[2]); //Vuelvo a setear actionsSize porque el método de arriba las cambia para acabar el for y las "arruina"
+        if (numberOfLines != actionsSize+3) { //Esto cuenta las líneas y si no hay aserción, no habrá mas de actionsSize + 3
+            predicate = lines[actionsSize + 3]; //Si hay aserción, se va a la línea donde debería estar. Cambié el +1 por un +3 porque tres líneas más arriba he cambiado el valor de actionsSize después del for
+        }
+
         List<String> initialLabels = new ArrayList<>();
         /*
         String initialState = lines[actionsSize+2].replaceAll("\\[", "").replaceAll("\\]", "");
