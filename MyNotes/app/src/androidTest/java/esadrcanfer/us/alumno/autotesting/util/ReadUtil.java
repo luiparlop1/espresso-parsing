@@ -48,9 +48,11 @@ public class ReadUtil {
     public String readText(){
         StringBuilder text = new StringBuilder();
         try {
-            BufferedReader br = new BufferedReader(new FileReader(
-                    Environment.getExternalStorageDirectory().getAbsolutePath().toString()
-                            + "/" + getPath()));
+
+            String filename=Environment.getExternalStorageDirectory().getAbsolutePath().toString()
+                    + "/" + getPath();
+            BufferedReader br = new BufferedReader(new FileReader(filename
+                    ));
             String line;
             while ((line = br.readLine())!= null){
                 text.append(line);
@@ -70,7 +72,14 @@ public class ReadUtil {
         List<Action> afterActions = new ArrayList<>();
         List<Action> testActions = new ArrayList<>();
         String text = readText();
-        String[] lines = text.split("\n");
+        String[] lines = {"esadrcanfer.us.alumno.autotesting",
+                "-1992",
+                "5",
+                "BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.autotesting:id/button], Create note",
+        "SCROLL_TO, UiSelector[RESOURCE_ID=], toElementById=editText1",
+        "TEXT, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.autotesting:id/editText1], e",
+        "SCROLL_TO, UiSelector[RESOURCE_ID=], toElementById=button",
+        "BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.autotesting:id/button], Save"};
         String appPackage = lines[0];
         Long seed;
 

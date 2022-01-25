@@ -23,7 +23,7 @@ public class TextInputGenerator extends InputGenerator {
 
         DictionaryBasedValueGenerator dictionary = new DictionaryBasedValueGenerator(1, getSeed());
         try {
-            if(getSeed() > 0 || defaultValue == null)
+            if(getSeed() < 0 || defaultValue == null)
                 value = dictionary.generate().toString();
             Log.d("TFG", value);
             object.setText(value);
