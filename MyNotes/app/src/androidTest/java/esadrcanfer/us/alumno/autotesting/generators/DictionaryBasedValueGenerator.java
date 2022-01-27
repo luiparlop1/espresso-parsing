@@ -1,4 +1,4 @@
-package esadrcanfer.us.alumno.autotesting.dictionary;
+package esadrcanfer.us.alumno.autotesting.generators;
 
 
 import net.sf.extjwnl.JWNLException;

@@ -12,7 +12,6 @@ import com.github.javaparser.symbolsolver.model.resolution.TypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.CombinedTypeSolver;
 import com.google.common.collect.Lists;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;

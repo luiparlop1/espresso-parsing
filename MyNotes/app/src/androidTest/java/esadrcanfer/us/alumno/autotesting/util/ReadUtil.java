@@ -48,9 +48,10 @@ public class ReadUtil {
     public String readText(){
         StringBuilder text = new StringBuilder();
         try {
-            BufferedReader br = new BufferedReader(new FileReader(
-                    Environment.getExternalStorageDirectory().getAbsolutePath().toString()
-                            + "/" + getPath()));
+            String filename=Environment.getExternalStorageDirectory().getAbsolutePath().toString()
+                    + "/" + getPath();
+            BufferedReader br = new BufferedReader(new FileReader(filename
+            ));
             String line;
             while ((line = br.readLine())!= null){
                 text.append(line);
