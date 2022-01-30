@@ -88,7 +88,7 @@ public class ReadUtil {
             if (seed <  0)
                 testActions.add(generateActionFromString(action,  seed));
             else
-                testActions.add(generateActionFromString(action, random.nextLong()));
+                testActions.add(generateActionFromString(action, seed)); //Antes, pasaba un número random que no sé por qué estaba ahí. Hay que pasarle el seed
             if(i == actionsSize+2){
                 actionsSize = i;
                 break;

@@ -21,24 +21,25 @@ public class TextInputGenerator extends InputGenerator {
         this.setDefaultValue(defaultValue);
     }
 
-    public String generateInput(UiObject object) throws UiObjectNotFoundException {
-        String value = getDefaultValue();
-
+   public String generateInput(UiObject object) throws UiObjectNotFoundException {
         DictionaryBasedValueGenerator dictionary = new DictionaryBasedValueGenerator(1, getSeed());
         String dictionaryValue = defaultValue;
+//        RandomIntegerGenerator gInteger = new RandomIntegerGenerator();
 //        String intValue = defaultValue;
-        RandomIntegerGenerator gInteger = new RandomIntegerGenerator();
+//        RandomRegexGenerator gRegex = new RandomRegexGenerator();
+//        String regexValue = defaultValue;
         try {
             if(getSeed() > 0 || defaultValue == null) {
                dictionaryValue = dictionary.generate().toString();
 //               intValue = gInteger.generate().toString();
+//               regexValue = gRegex.generate();
             }
                 Log.d("TFG", dictionaryValue);
             object.setText(dictionaryValue);
         } catch (JWNLException e) {
             e.printStackTrace();
         }
-        return value;
+        return dictionaryValue;
     }
 
     public Long getSeed() {
