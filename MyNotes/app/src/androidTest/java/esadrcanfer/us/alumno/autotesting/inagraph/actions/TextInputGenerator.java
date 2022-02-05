@@ -8,6 +8,7 @@ import androidx.test.uiautomator.UiObjectNotFoundException;
 import net.sf.extjwnl.JWNLException;
 
 import esadrcanfer.us.alumno.autotesting.generators.DictionaryBasedValueGenerator;
+import esadrcanfer.us.alumno.autotesting.generators.ProbabilityGenerator;
 import esadrcanfer.us.alumno.autotesting.generators.RandomIntegerGenerator;
 
 public class TextInputGenerator extends InputGenerator {
@@ -24,15 +25,9 @@ public class TextInputGenerator extends InputGenerator {
    public String generateInput(UiObject object) throws UiObjectNotFoundException {
         DictionaryBasedValueGenerator dictionary = new DictionaryBasedValueGenerator(1, getSeed());
         String dictionaryValue = defaultValue;
-//        RandomIntegerGenerator gInteger = new RandomIntegerGenerator();
-//        String intValue = defaultValue;
-//        RandomRegexGenerator gRegex = new RandomRegexGenerator();
-//        String regexValue = defaultValue;
         try {
             if(getSeed() > 0 || defaultValue == null) {
                dictionaryValue = dictionary.generate().toString();
-//               intValue = gInteger.generate().toString();
-//               regexValue = gRegex.generate();
             }
                 Log.d("TFG", dictionaryValue);
             object.setText(dictionaryValue);

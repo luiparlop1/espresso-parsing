@@ -11,10 +11,10 @@ public class RandomRegexGenerator {
 
         String regex = "[CJPTFVNDL][aeiou][cjptfvndl][aeiou]( el )(destruye|pisa|empuña|tuerce|troncha|acaricia|pasea|devuelve|vuela|insulta)( gatos| peces| puentes| soles| guantes| zapatos| chicles| mares| pelos| uñas)";
         Xeger generator = new Xeger(regex);
-        String result = generator.generate();
-        assert result.matches(regex);
+        String randomValue = generator.generate();
+        assert randomValue.matches(regex);
 
-        return result;
+        return randomValue;
     }
 
 }

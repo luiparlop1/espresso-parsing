@@ -9,8 +9,8 @@ public class RandomIntegerGenerator {
         int min = 1;
         int max = 6;
 
-        int chosenNumber = (int)(Math.random()*(max-min+1)+min);
-        return chosenNumber;
+        int randomValue = (int)(Math.random()*(max-min+1)+min);
+        return randomValue;
     }
 
 }
