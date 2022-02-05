@@ -15,7 +15,6 @@ public class TextInputGenerator extends InputGenerator {
 
     private Long seed;
     private String defaultValue;
-    private String value;
 
     public TextInputGenerator(Long seed, String defaultValue){
         this.seed = seed;
