@@ -1,6 +1,5 @@
 package esadrcanfer.us.alumno.autotesting.generators;
 
-import net.sf.extjwnl.JWNLException;
 
 import java.lang.reflect.*;
 
@@ -8,26 +7,39 @@ import esadrcanfer.us.alumno.autotesting.classes.Person;
 
 public class ReflectionGenerator {
 
-    public static void main(String[] args) throws JWNLException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    String attributeName;
+    String className;
+    Object value;
+    Object target;
+//    Generator generator;
 
-        Class personClass = Person.class;
-        DictionaryBasedValueGenerator dictionaryGenerator = new DictionaryBasedValueGenerator(1, 1L);
-        RandomIntegerGenerator integerGenerator = new RandomIntegerGenerator();
-        Object[] fields = new Object[]{dictionaryGenerator.generate().toString(), integerGenerator.generate(), dictionaryGenerator.generate()};
-        Class[] parameterTypes = new Class[]{String.class, Integer.class, String.class};
+    public ReflectionGenerator(String attributeName, String className, Object value, Object target){
+        this.attributeName = attributeName;
+        this.className = className;
+        this.value = value;
+        this.target = target;
+    }
 
-        Person person = new Person();
-        final Class instanceClass = person.getClass();
-        Method[] methods = instanceClass.getMethods();
-        int index = 0;
-        for(Method method : methods){
-            String name = method.getName();
-            if(name.startsWith("set")){
-                instanceClass.getMethod(name, parameterTypes[index]).invoke(person, fields[index]);
-                index++;
+    public void generate() throws IllegalAccessException, NoSuchFieldException {
+
+        final Class instanceClass = target.getClass();
+       Field attribute = instanceClass.getDeclaredField(attributeName);
+            if(attribute!=null){
+                attribute.setAccessible(true);
+                attribute.set(target, value);
             }
         }
+
+
+    public static void main(String args[]) throws IllegalAccessException, NoSuchFieldException {
+
+        Person p = new Person();
+        p.setName("Francisco");
+
+        ReflectionGenerator generator = new ReflectionGenerator("age", "esadrcanfer.us.alumno.autotesting.classes.Person",12 , p);
+        generator.generate();
+        System.out.println(p.getName());
+        System.out.println(p.getAge());
     }
-    public ReflectionGenerator() throws JWNLException {
-    }
+
 }
