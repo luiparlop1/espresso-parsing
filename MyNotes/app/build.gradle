@@ -62,6 +62,8 @@ dependencies {
     implementation "org.springframework:spring-core:4.2.0.RELEASE"
     implementation "org.springframework:spring-expression:4.2.0.RELEASE"
     implementation "org.springframework:spring-context:4.2.0.RELEASE"
+    implementation 'org.apache.commons:commons-math3:3.6.1'
+
 
     implementation 'com.github.javaparser:javaparser-symbol-solver-core:3.18.0'
     implementation 'com.github.javaparser:javaparser-core-serialization:3.18.0'

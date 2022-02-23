@@ -1,21 +1,26 @@
 package esadrcanfer.us.alumno.autotesting.generators;
 
 
+import androidx.test.uiautomator.UiObjectNotFoundException;
+
+import net.sf.extjwnl.JWNLException;
+
 import java.lang.reflect.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import esadrcanfer.us.alumno.autotesting.classes.Person;
 
-public class ReflectionGenerator {
+public class ReflectionGenerator{
 
     String attributeName;
-    String className;
-    Object value;
+    static Map<String, Object> attributeMap = new HashMap<String, Object>();
+    static Object value;
     Object target;
-//    Generator generator;
+//  Generator generator;
 
-    public ReflectionGenerator(String attributeName, String className, Object value, Object target){
+    public ReflectionGenerator(String attributeName, Object value, Object target){
         this.attributeName = attributeName;
-        this.className = className;
         this.value = value;
         this.target = target;
     }
@@ -31,14 +36,37 @@ public class ReflectionGenerator {
         }
 
 
-    public static void main(String args[]) throws IllegalAccessException, NoSuchFieldException {
+    public static void main(String args[]) throws IllegalAccessException, NoSuchFieldException, JWNLException, UiObjectNotFoundException {
 
         Person p = new Person();
-        p.setName("Francisco");
+        Field[] attributes = p.getClass().getDeclaredFields();
+        for(Field a: attributes){
+            String fieldName = a.getName();
 
-        ReflectionGenerator generator = new ReflectionGenerator("age", "esadrcanfer.us.alumno.autotesting.classes.Person",12 , p);
-        generator.generate();
+            if(fieldName.contains("name") || fieldName.contains("Name")){
+                Long seed = 0L + RandomIntegerGenerator.generate();
+                DictionaryBasedValueGenerator dict = new DictionaryBasedValueGenerator(1, seed);
+                value = dict.generate();
+                attributeMap.put(fieldName, value);
+                ReflectionGenerator generator = new ReflectionGenerator(fieldName, value , p);
+                generator.generate();
+            }else if(fieldName.contains("mail")){
+                RandomRegexGenerator regex = new RandomRegexGenerator();
+                value = regex.generate();
+                attributeMap.put(fieldName, value);
+                ReflectionGenerator generator = new ReflectionGenerator(fieldName, value , p);
+                generator.generate();
+            }else{
+                value = RandomIntegerGenerator.generate();
+                attributeMap.put(fieldName, value);
+                ReflectionGenerator generator = new ReflectionGenerator(fieldName, value , p);
+                generator.generate();
+            }
+
+        }
+
         System.out.println(p.getName());
+        System.out.println(p.getLastName());
         System.out.println(p.getAge());
     }
 

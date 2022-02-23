@@ -3,11 +3,13 @@ package esadrcanfer.us.alumno.autotesting.generators;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 
-public class GivenValueGenerator {
+import net.sf.extjwnl.JWNLException;
+
+public class GivenValueGenerator extends AbstractGenerator{
 
     private String defaultValue;
 
-    public GivenValueGenerator(String defaultValue){
+    public GivenValueGenerator(){
         this.setDefaultValue(defaultValue);
     }
 
@@ -15,7 +17,7 @@ public class GivenValueGenerator {
         this.defaultValue = defaultValue;
     }
 
-    public String generateInput(UiObject object) throws UiObjectNotFoundException {
+    public String generate() throws UiObjectNotFoundException {
         return defaultValue;
     }
 }

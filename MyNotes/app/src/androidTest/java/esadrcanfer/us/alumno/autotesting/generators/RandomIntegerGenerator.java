@@ -5,11 +5,11 @@ import net.sf.extjwnl.JWNLException;
 public class RandomIntegerGenerator {
 
 
-    public Integer generate() throws JWNLException {
-        int min = 1;
-        int max = 6;
+    public static Integer generate() throws JWNLException {
+        Integer min = 1;
+        Integer max = 6;
 
-        int randomValue = (int)(Math.random()*(max-min+1)+min);
+        Integer randomValue = (int)(Math.random()*(max-min+1)+min);
         return randomValue;
     }
 

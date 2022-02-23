@@ -21,14 +21,14 @@ public class TextInputGenerator extends InputGenerator {
         this.setDefaultValue(defaultValue);
     }
 
-   public String generateInput(UiObject object) throws UiObjectNotFoundException {
+    public String generateInput(UiObject object) throws UiObjectNotFoundException {
         DictionaryBasedValueGenerator dictionary = new DictionaryBasedValueGenerator(1, getSeed());
         String dictionaryValue = defaultValue;
         try {
             if(getSeed() > 0 || defaultValue == null) {
-               dictionaryValue = dictionary.generate().toString();
+                dictionaryValue = dictionary.generate().toString();
             }
-                Log.d("TFG", dictionaryValue);
+            Log.d("TFG", dictionaryValue);
             object.setText(dictionaryValue);
         } catch (JWNLException e) {
             e.printStackTrace();
