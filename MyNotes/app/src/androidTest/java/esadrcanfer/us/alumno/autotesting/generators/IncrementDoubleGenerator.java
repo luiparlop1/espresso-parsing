@@ -6,12 +6,12 @@ import net.sf.extjwnl.JWNLException;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class LagrangeDoubleGenerator{
+public class IncrementDoubleGenerator {
 
     Integer givenNumber;
     Long seed;
 
-    public LagrangeDoubleGenerator(){
+    public IncrementDoubleGenerator(){
      this.seed = seed;
      this.givenNumber = givenNumber;
     }

@@ -1,11 +1,8 @@
 package esadrcanfer.us.alumno.autotesting.generators;
 
-import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 
 import net.sf.extjwnl.JWNLException;
-
-import esadrcanfer.us.alumno.autotesting.inagraph.actions.ButtonAction;
 
 public abstract class AbstractGenerator<T> {
 
@@ -25,7 +22,7 @@ public abstract class AbstractGenerator<T> {
                 break;
             case "number":
                 RandomIntegerGenerator numberRes = new RandomIntegerGenerator();
-                res = numberRes.generate().toString();
+                res = numberRes.generate(1,6).toString();
                 break;
             case "regex":
                 RandomRegexGenerator regexRes = new RandomRegexGenerator();
@@ -40,7 +37,7 @@ public abstract class AbstractGenerator<T> {
                 res = givenRes.generate();
                 break;
             case "lagrange":
-                LagrangeDoubleGenerator lagrangeRes = new LagrangeDoubleGenerator();
+                IncrementDoubleGenerator lagrangeRes = new IncrementDoubleGenerator();
                 res = lagrangeRes.generate().toString();
                 break;
 //            case "reflection":
