@@ -45,15 +45,17 @@ public class ReflectionGenerator{
             String fieldName = a.getName();
 
             if(fieldName.contains("name") || fieldName.contains("Name")){
-                Long seed = 0L + RandomIntegerGenerator.generate(1,6);
+                RandomIntegerGenerator randomInt = new RandomIntegerGenerator(1,100);
+                Long seed = 0L + randomInt.generate();
                 DictionaryBasedValueGenerator dict = new DictionaryBasedValueGenerator(1, seed);
                 value = dict.generate();
 
             }else if(fieldName.contains("mail")){
-                RandomRegexGenerator regex = new RandomRegexGenerator();
+                RandomRegexGenerator regex = new RandomRegexGenerator("email");
                 value = regex.generate();
             }else{
-                value = RandomIntegerGenerator.generate(1,6);
+                RandomIntegerGenerator randomInt = new RandomIntegerGenerator(1,100);
+                value = randomInt.generate();
             }
             attributeMap.put(fieldName, value);
             ReflectionGenerator generator = new ReflectionGenerator(fieldName, value , p);

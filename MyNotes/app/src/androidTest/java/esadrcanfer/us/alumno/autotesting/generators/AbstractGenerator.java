@@ -4,6 +4,10 @@ import androidx.test.uiautomator.UiObjectNotFoundException;
 
 import net.sf.extjwnl.JWNLException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public abstract class AbstractGenerator<T> {
 
     public abstract T generate() throws UiObjectNotFoundException, JWNLException;
@@ -13,19 +17,23 @@ public abstract class AbstractGenerator<T> {
         String type = "numberFromList";
         switch (type) {
             case "numberFromList":
-                IntegerListGenerator integerRes = new IntegerListGenerator();
+                List<Integer> integerList = new ArrayList<Integer>();
+                integerList.addAll(Arrays.asList(1, 2, 3, 4, 5));
+                IntegerListGenerator integerRes = new IntegerListGenerator(integerList);
                 res = integerRes.generate().toString();
                 break;
             case "numberFromProbabilityList":
-                ProbabilityGenerator integerProbabilityRes = new ProbabilityGenerator();
+                List<Integer> integerProbList = new ArrayList<Integer>();
+                integerProbList.addAll(Arrays.asList(1, 2, 3, 4, 5));
+                ProbabilityGenerator integerProbabilityRes = new ProbabilityGenerator(integerProbList);
                 res = integerProbabilityRes.generate().toString();
                 break;
             case "number":
-                RandomIntegerGenerator numberRes = new RandomIntegerGenerator();
-                res = numberRes.generate(1,6).toString();
+                RandomIntegerGenerator numberRes = new RandomIntegerGenerator(1,6);
+                res = numberRes.generate().toString();
                 break;
             case "regex":
-                RandomRegexGenerator regexRes = new RandomRegexGenerator();
+                RandomRegexGenerator regexRes = new RandomRegexGenerator("vikingName");
                 res = regexRes.generate();
                 break;
             case "word":
@@ -33,11 +41,11 @@ public abstract class AbstractGenerator<T> {
                 res = dictionaryRes.generate();
                 break;
             case "given":
-                GivenValueGenerator givenRes = new GivenValueGenerator();
+                GivenValueGenerator givenRes = new GivenValueGenerator("Word");
                 res = givenRes.generate();
                 break;
-            case "lagrange":
-                IncrementDoubleGenerator lagrangeRes = new IncrementDoubleGenerator();
+            case "increment":
+                IncrementDoubleGenerator lagrangeRes = new IncrementDoubleGenerator(2);
                 res = lagrangeRes.generate().toString();
                 break;
 //            case "reflection":

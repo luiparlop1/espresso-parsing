@@ -2,19 +2,33 @@ package esadrcanfer.us.alumno.autotesting.generators;
 
 import net.sf.extjwnl.JWNLException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class ProbabilityGenerator extends IntegerListGenerator{
 
+    List<Integer> integerList;
     Map<Integer, Integer> probabilityMap = new TreeMap<>();
 
-    public ProbabilityGenerator(){
+    public ProbabilityGenerator(List<Integer> integerList){
+        super(integerList);
+        this.integerList = integerList;
     }
 
     public Integer generate() throws JWNLException {
 
-        probabilityMap.put(a,10);probabilityMap.put(b,20);probabilityMap.put(c,30);probabilityMap.put(d,40); //Creamos un mapa con los valores y un valor de probabilidad asociado a cada uno
+        List<Integer> probabilities = new ArrayList<>();
+        Integer index = 0;
+
+        for (Integer i: integerList){
+            Integer prob = (int)(Math.random()*(100-1+1)+1); //Creamos una lista de probabilidades y la rellenamos con tantos numeros random
+            probabilities.add(prob);                         //entre 1 y 100 como elementos haya en integerList. Luego añadimos al mapa las parejas de valores
+            probabilityMap.put(i, probabilities.get(index));
+            index++;
+        }
+
 
         Integer min = 0;
         Integer max = 0;

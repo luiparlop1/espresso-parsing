@@ -9,10 +9,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class IncrementDoubleGenerator {
 
     Integer givenNumber;
-    Long seed;
 
-    public IncrementDoubleGenerator(){
-     this.seed = seed;
+    public IncrementDoubleGenerator(Integer givenNumber){
      this.givenNumber = givenNumber;
     }
 

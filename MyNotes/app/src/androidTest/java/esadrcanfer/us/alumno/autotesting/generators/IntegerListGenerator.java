@@ -10,17 +10,14 @@ import java.util.List;
 
 public class IntegerListGenerator extends AbstractGenerator{
 
-    List<Integer> valueList = new ArrayList<Integer>();
-    Integer a = 15; Integer b = 34; Integer c = 68; Integer d = 90;
-    Long seed;
+    List<Integer> valueList;
 
-    public IntegerListGenerator(){
+    public IntegerListGenerator(List<Integer> valueList){
         this.valueList=valueList;
     }
 
-    public Integer generate() throws JWNLException{
 
-        valueList.add(a);valueList.add(b);valueList.add(c);valueList.add(d);
+    public Integer generate() throws JWNLException{
 
         Integer min = 0;
         Integer max = valueList.size()-1;
