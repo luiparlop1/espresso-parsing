@@ -1,6 +1,5 @@
 package esadrcanfer.us.alumno.autotesting.generators;
 
-import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 
 import net.sf.extjwnl.JWNLException;
@@ -19,7 +18,7 @@ public class RandomRegexGenerator extends AbstractGenerator{
         String randomValue = null;
 
         if(type.equals("email")) {
-            String regex = "[bcdfghjklmnpqrstvwxy][aeiou][bcdfghjklmnpqrstvwxy][aeiou][bcdfghjklmnpqrstvwxy][aeiou][bcdfghjklmnpqrstvwxy][aeiou][123456789][123456789](ARROBA)(gmail)(PUNTO)(com)";
+            String regex = "[bcdfghjklmnpqrstvwxy][aeiou][bcdfghjklmnpqrstvwxy][aeiou][bcdfghjklmnpqrstvwxy][aeiou][bcdfghjklmnpqrstvwxy][aeiou][123456789][123456789](\\@)(gmail|hotmail|yahoo)(\\.)(com)";
             Xeger generator = new Xeger(regex);
             randomValue = generator.generate();
             assert randomValue.matches(regex);
