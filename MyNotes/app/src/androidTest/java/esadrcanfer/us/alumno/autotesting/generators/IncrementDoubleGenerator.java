@@ -6,7 +6,7 @@ import net.sf.extjwnl.JWNLException;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class IncrementDoubleGenerator {
+public class IncrementDoubleGenerator extends AbstractGenerator{
 
     Integer givenNumber;
 

@@ -11,7 +11,7 @@ import java.util.Map;
 
 import esadrcanfer.us.alumno.autotesting.classes.Person;
 
-public class ReflectionGenerator{
+public class ReflectionGenerator extends AbstractGenerator{
 
     String attributeName;
     static Map<String, Object> attributeMap = new HashMap<String, Object>();
@@ -25,7 +25,7 @@ public class ReflectionGenerator{
         this.target = target;
     }
 
-    public void generate() throws IllegalAccessException, NoSuchFieldException {
+    public Object generate() throws IllegalAccessException, NoSuchFieldException {
 
         final Class instanceClass = target.getClass();
        Field attribute = instanceClass.getDeclaredField(attributeName);
@@ -33,7 +33,8 @@ public class ReflectionGenerator{
                 attribute.setAccessible(true);
                 attribute.set(target, value);
             }
-        }
+        return null;
+    }
 
 
     public static void main(String args[]) throws IllegalAccessException, NoSuchFieldException, JWNLException, UiObjectNotFoundException {
