@@ -40,6 +40,9 @@ public class ReadUtil {
         this.path = path;
         this.sameSeed = sameSeed;
     }
+    public ReadUtil(String path){
+        this.path = path;
+    }
 
     public String getPath(){
         return this.path;
