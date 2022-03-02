@@ -52,26 +52,33 @@ public class TextInputGenerator extends InputGenerator {
         type = splitLine[1];
 
         String conditions = splitLine[2];
-        String[] splitConditions = conditions.split(",");
+        String[] splitConditions = conditions.split("/");
 
         String cond1 = splitConditions[0];
         String cond2 = "";
-        if(!conditions.endsWith(",")) {
+
+        if(!conditions.endsWith("/")) {
             cond2 = splitConditions[1];
         }
+
+        List<Integer> integerList = new ArrayList<>();
+
+        if(type.equals("numberFromList") || type.equals("numberFromProbabilityList")){
+            String[] numbers = cond1.split(",");
+            for(String number: numbers){
+                integerList.add(Integer.parseInt(number));
+            }
+        }
+
         try {
             if (getSeed() > 0 || defaultValue == null) {
                 switch (type) {
                     case "numberFromList":
-                        List<Integer> integerList = new ArrayList<>();
-                        integerList.addAll(Arrays.asList(1, 2, 3, 4, 5));
                         IntegerListGenerator integerRes = new IntegerListGenerator(integerList);
                         res = integerRes.generate().toString();
                         break;
                     case "numberFromProbabilityList":
-                        List<Integer> integerProbList = new ArrayList<>();
-                        integerProbList.addAll(Arrays.asList(1, 2, 3, 4, 5));
-                        ProbabilityGenerator integerProbabilityRes = new ProbabilityGenerator(integerProbList);
+                        ProbabilityGenerator integerProbabilityRes = new ProbabilityGenerator(integerList);
                         res = integerProbabilityRes.generate().toString();
                         break;
                     case "number":
