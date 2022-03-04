@@ -112,7 +112,7 @@ public class ReadUtil {
                 }
             }
             if (seed <  0)
-                testActions.add(generateActionFromString(action,  seed, null, null, null));
+                testActions.add(generateActionFromString(action,  seed, generatorType,cond1,cond2));
             else
                 testActions.add(generateActionFromString(action, seed, generatorType,cond1,cond2)); //Antes, pasaba un número random que no sé por qué estaba ahí. Hay que pasarle el seed
             if(i == actionsSize+2){

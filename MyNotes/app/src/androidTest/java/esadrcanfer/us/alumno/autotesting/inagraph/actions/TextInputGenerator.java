@@ -102,6 +102,7 @@ public class TextInputGenerator extends InputGenerator {
         }catch (JWNLException e) {
             e.printStackTrace();
         }
+        object.setText(res);
         return res;
     }
 
