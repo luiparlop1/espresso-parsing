@@ -177,7 +177,7 @@ public class TextualUITestGenerator {
 
             if(isChild == false){
                 if (mc.getName().toString().equals("withId")) {
-                    objectId = "RESOURCE_ID=" + BuildConfig.APPLICATION_ID + ":id/" + mc.getArguments().get(i).toString().substring(5);
+                    objectId = "RESOURCE_ID=" + "esadrcanfer.us.alumno.autotesting" + ":id/" + mc.getArguments().get(i).toString().substring(5);
                     this.tempId = "toElementById=" + mc.getArgument(i).toString().substring(5);
                 }
 
