@@ -32,35 +32,21 @@ public class TextInputGenerator extends InputGenerator {
 
     private Long seed;
     private String defaultValue;
-    private Integer iterator = -1;
+    private String type;
+    private String cond1;
+    private String cond2;
 
-    public TextInputGenerator(Long seed, String defaultValue){
+
+    public TextInputGenerator(Long seed, String defaultValue, String type, String cond1, String cond2){
         this.seed = seed;
         this.setDefaultValue(defaultValue);
+        this.type=type;
+        this.cond1=cond1;
+        this.cond2=cond2;
     }
 
     public String generateInput(UiObject object) throws UiObjectNotFoundException {
         String res = getDefaultValue();
-        String type = "";
-
-        ReadUtil ru = new ReadUtil("Download/configu.txt");
-        String configFile = ru.readText();
-        String[] lines = configFile.split("\n");
-        Integer iteration = iterate();
-        String line = lines[iteration];
-        String[] splitLine = line.split("-");
-        type = splitLine[1];
-
-        String conditions = splitLine[2];
-        String[] splitConditions = conditions.split("/");
-
-        String cond1 = splitConditions[0];
-        String cond2 = "";
-
-        if(!conditions.endsWith("/")) {
-            cond2 = splitConditions[1];
-        }
-
         List<Integer> integerList = new ArrayList<>();
 
         if(type.equals("numberFromList") || type.equals("numberFromProbabilityList")){
@@ -129,9 +115,5 @@ public class TextInputGenerator extends InputGenerator {
 
     public void setDefaultValue(String defaultValue) {
         this.defaultValue = defaultValue;
-    }
-
-    private Integer iterate(){
-    return iterator+1;
     }
 }

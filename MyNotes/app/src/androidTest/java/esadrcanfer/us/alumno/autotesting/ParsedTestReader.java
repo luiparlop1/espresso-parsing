@@ -13,7 +13,7 @@ public class ParsedTestReader {
     @Test
     public void crearNotaUITest() throws UiObjectNotFoundException, IOException {
         ReadTestCase read = new ReadTestCase();
-        read.read("TestCreateContactLuis", false);
+        read.read("Test3NotasTextual", false);
     }
 
 }

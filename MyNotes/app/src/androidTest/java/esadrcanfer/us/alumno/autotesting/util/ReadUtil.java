@@ -86,12 +86,35 @@ public class ReadUtil {
         Integer actionsSize = new Integer(lines[2]);
         Random random = new Random(seed);
         String action = "";
+        String generatorType = "";
+        String cond1 = "";
+        String cond2 = "";
+        Integer textInputCounter = 0;
         for(int i = 3; i<= actionsSize + 2; i++){
             action = lines[i];
+            if(action.contains("TEXT")) {
+                ReadUtil ru = new ReadUtil("Download/configu.txt");
+                String configFile = ru.readText();
+                String[] configLines = configFile.split("\n");
+                String configLine = configLines[textInputCounter];
+                textInputCounter++;
+                String[] splitConfigLine = configLine.split("-");
+                generatorType = splitConfigLine[1];
+
+                String conditions = splitConfigLine[2];
+                String[] splitConditions = conditions.split("/");
+
+                cond1 = splitConditions[0];
+                cond2 = "";
+
+                if(!conditions.endsWith("/")) {
+                    cond2 = splitConditions[1];
+                }
+            }
             if (seed <  0)
-                testActions.add(generateActionFromString(action,  seed));
+                testActions.add(generateActionFromString(action,  seed, null, null, null));
             else
-                testActions.add(generateActionFromString(action, seed)); //Antes, pasaba un número random que no sé por qué estaba ahí. Hay que pasarle el seed
+                testActions.add(generateActionFromString(action, seed, generatorType,cond1,cond2)); //Antes, pasaba un número random que no sé por qué estaba ahí. Hay que pasarle el seed
             if(i == actionsSize+2){
                 actionsSize = i;
                 break;
@@ -122,7 +145,7 @@ public class ReadUtil {
         return testCase;
     }
 
-    public Action  generateActionFromString(String action, Long seed){
+    public Action  generateActionFromString(String action, Long seed, String generatorType, String cond1, String cond2){
         String[] splitAction = action.split(", "); // Dividir la cadena por comas
         String type = splitAction[0];       // Seleccionar el tipo de objeto (botón, cuadro de texto, radio button, etc.)
         String resourceId = splitAction[1]; // Selector del objeto sobre el que actuar
@@ -146,7 +169,7 @@ public class ReadUtil {
                 res = new ButtonAction(object);
                 break;
             case "TEXT":
-                TextInputGenerator textInputGenerator = new TextInputGenerator(seed, value);
+                TextInputGenerator textInputGenerator = new TextInputGenerator(seed, value, generatorType, cond1, cond2);
                 res = new TextInputAction(object, textInputGenerator);
                 break;
             case "CHECKBOX":
@@ -191,7 +214,7 @@ public class ReadUtil {
                 res = new ButtonAction(object);
                 break;
             case "TEXT":
-                TextInputGenerator textInputGenerator = new TextInputGenerator(seed, value);
+                TextInputGenerator textInputGenerator = new TextInputGenerator(seed, value, null, null, null);
                 res = new TextInputAction(object, textInputGenerator);
                 break;
             case "CHECKBOX":
