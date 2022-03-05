@@ -11,6 +11,6 @@ import java.util.List;
 
 public abstract class AbstractGenerator<T> {
 
-    public abstract T generate() throws UiObjectNotFoundException, JWNLException, IllegalAccessException, NoSuchFieldException;
+    public abstract T generate() throws UiObjectNotFoundException, JWNLException, IllegalAccessException, NoSuchFieldException, ClassNotFoundException, InstantiationException;
 
 }

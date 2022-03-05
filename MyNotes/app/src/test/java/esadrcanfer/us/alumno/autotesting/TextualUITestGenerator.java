@@ -65,7 +65,7 @@ public class TextualUITestGenerator {
             exploreMethods(md);
         });
 
-        writerUtil.write(BuildConfig.APPLICATION_ID);
+        writerUtil.write("esadrcanfer.us.alumno.autotesting");
         writerUtil.write("-1");
         writerUtil.write(String.valueOf(objectTypes.size()));
         for(int i = 0; i < objectTypes.size(); i++){

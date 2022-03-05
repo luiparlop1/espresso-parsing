@@ -6,26 +6,24 @@ import androidx.test.uiautomator.UiObjectNotFoundException;
 import net.sf.extjwnl.JWNLException;
 
 import java.lang.reflect.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import esadrcanfer.us.alumno.autotesting.classes.Person;
 
 public class ReflectionGenerator extends AbstractGenerator{
 
-    String attributeName;
     static Map<String, Object> attributeMap = new HashMap<String, Object>();
     static Object value;
     Object target;
-//  Generator generator;
 
-    public ReflectionGenerator(String attributeName, Object value, Object target){
-        this.attributeName = attributeName;
-        this.value = value;
+    public ReflectionGenerator(Object target){
         this.target = target;
     }
 
-    public Object generate() throws IllegalAccessException, NoSuchFieldException {
+    public void generateClass(String attributeName, Object value) throws IllegalAccessException, NoSuchFieldException {
 
         final Class instanceClass = target.getClass();
        Field attribute = instanceClass.getDeclaredField(attributeName);
@@ -33,19 +31,32 @@ public class ReflectionGenerator extends AbstractGenerator{
                 attribute.setAccessible(true);
                 attribute.set(target, value);
             }
-        return null;
     }
 
 
-    public static void main(String args[]) throws IllegalAccessException, NoSuchFieldException, JWNLException, UiObjectNotFoundException {
+    public String generate() throws JWNLException, UiObjectNotFoundException {
 
-        Person p = new Person();
+        String target = this.target.toString();
+        Class<?> targetClass = null;
+        try {
+            targetClass = Class.forName("esadrcanfer.us.alumno.autotesting.classes."+target);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        Object p = null;
+        try {
+            p = targetClass.newInstance();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
 
         Field[] attributes = p.getClass().getDeclaredFields();
         for(Field a: attributes){
             String fieldName = a.getName();
 
-            if(fieldName.contains("name") || fieldName.contains("Name")){
+            if(fieldName.contains("name") || fieldName.contains("Name") || fieldName.contains("breed")){
                 RandomIntegerGenerator randomInt = new RandomIntegerGenerator(1,100);
                 Long seed = 0L + randomInt.generate();
                 DictionaryBasedValueGenerator dict = new DictionaryBasedValueGenerator(1, seed);
@@ -54,19 +65,29 @@ public class ReflectionGenerator extends AbstractGenerator{
             }else if(fieldName.contains("mail")){
                 RandomRegexGenerator regex = new RandomRegexGenerator("email");
                 value = regex.generate();
+            }else if(fieldName.contains("chip")){
+                List<Integer> integerList = new ArrayList<Integer>();
+                integerList.add(123123123);
+                integerList.add(678678678);
+                integerList.add(456456456);
+                IntegerListGenerator randomInt = new IntegerListGenerator(integerList);
+                value = randomInt.generate();
             }else{
                 RandomIntegerGenerator randomInt = new RandomIntegerGenerator(1,100);
                 value = randomInt.generate();
             }
             attributeMap.put(fieldName, value);
-            ReflectionGenerator generator = new ReflectionGenerator(fieldName, value , p);
-            generator.generate();
+            ReflectionGenerator generator = new ReflectionGenerator(p);
+            try {
+                generator.generateClass(a.getName(), value);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            }
         }
 
-        System.out.println(p.getName());
-        System.out.println(p.getLastName());
-        System.out.println(p.getAge());
-        System.out.println(p.getEmail());
+        return p.toString();
     }
 
 }

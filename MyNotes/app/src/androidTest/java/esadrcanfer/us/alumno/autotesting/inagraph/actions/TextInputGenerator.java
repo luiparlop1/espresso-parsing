@@ -26,6 +26,7 @@ import esadrcanfer.us.alumno.autotesting.generators.IntegerListGenerator;
 import esadrcanfer.us.alumno.autotesting.generators.ProbabilityGenerator;
 import esadrcanfer.us.alumno.autotesting.generators.RandomIntegerGenerator;
 import esadrcanfer.us.alumno.autotesting.generators.RandomRegexGenerator;
+import esadrcanfer.us.alumno.autotesting.generators.ReflectionGenerator;
 import esadrcanfer.us.alumno.autotesting.util.ReadUtil;
 
 public class TextInputGenerator extends InputGenerator {
@@ -45,7 +46,7 @@ public class TextInputGenerator extends InputGenerator {
         this.cond2=cond2;
     }
 
-    public String generateInput(UiObject object) throws UiObjectNotFoundException {
+    public String generateInput(UiObject object) throws UiObjectNotFoundException{
         String res = getDefaultValue();
         List<Integer> integerList = new ArrayList<>();
 
@@ -92,12 +93,11 @@ public class TextInputGenerator extends InputGenerator {
                         IncrementDoubleGenerator incrementRes = new IncrementDoubleGenerator(givenNumber);
                         res = incrementRes.generate().toString();
                         break;
-//            case "reflection":
-//                ReflectionGenerator reflectionRes = new ReflectionGenerator();
-//                res = reflectionRes.generate();
-//                break;
+                   case "reflection":
+                        ReflectionGenerator reflectionRes = new ReflectionGenerator(cond1);
+                        res = reflectionRes.generate();
+                        break;
                 }
-                object.setText(res);
             }
         }catch (JWNLException e) {
             e.printStackTrace();
