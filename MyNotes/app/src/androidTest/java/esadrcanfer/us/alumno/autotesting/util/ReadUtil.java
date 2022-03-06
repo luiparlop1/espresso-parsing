@@ -99,9 +99,9 @@ public class ReadUtil {
                 String configLine = configLines[textInputCounter];
                 textInputCounter++;
                 String[] splitConfigLine = configLine.split("-");
-                generatorType = splitConfigLine[1];
+                generatorType = splitConfigLine[0];
 
-                String conditions = splitConfigLine[2];
+                String conditions = splitConfigLine[1];
                 String[] splitConditions = conditions.split("/");
 
                 cond1 = splitConditions[0];
