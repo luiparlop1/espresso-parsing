@@ -44,11 +44,18 @@ public class ReflectionGenerator extends AbstractGenerator{
             e.printStackTrace();
         }
         Object p = null;
+        Constructor constructor = null;
+
         try {
-            p = targetClass.newInstance();
+            constructor = targetClass.getConstructor();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        try {
+            p = constructor.newInstance();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
-        } catch (InstantiationException e) {
+        } catch (InstantiationException | InvocationTargetException e) {
             e.printStackTrace();
         }
 
