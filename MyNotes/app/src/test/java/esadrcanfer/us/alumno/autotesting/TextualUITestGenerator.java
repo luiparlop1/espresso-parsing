@@ -1,4 +1,6 @@
 package esadrcanfer.us.alumno.autotesting;
+import androidx.test.uiautomator.v18.BuildConfig;
+
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
@@ -12,7 +14,6 @@ import com.github.javaparser.symbolsolver.model.resolution.TypeSolver;
 import com.github.javaparser.symbolsolver.resolution.typesolvers.CombinedTypeSolver;
 import com.google.common.collect.Lists;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
@@ -55,16 +56,16 @@ public class TextualUITestGenerator {
         File file=new File(FILE_PATH);
         CompilationUnit cu = StaticJavaParser.parse(file);
         Optional<ClassOrInterfaceDeclaration> fileParsed = cu.getClassByName(FILE);
-        // We print the class to check that the class is correcly parsed
+        // We print the class to check that the class is correctly parsed
         //System.out.println(fileParsed);
-        // We  visit each methos and print its name:
+        // We  visit each methoD and print its name:
         VoidVisitor<?> methodNameVisitor = new MethodNamePrinter();
         methodNameVisitor.visit(cu, null);
         cu.findAll(MethodDeclaration.class).forEach((md) -> {
             exploreMethods(md);
         });
 
-        writerUtil.write(BuildConfig.APPLICATION_ID);
+        writerUtil.write("esadrcanfer.us.alumno.autotesting");
         writerUtil.write("-1");
         writerUtil.write(String.valueOf(objectTypes.size()));
         for(int i = 0; i < objectTypes.size(); i++){
@@ -72,8 +73,6 @@ public class TextualUITestGenerator {
         }
         if (predicate != null) {
             writerUtil.write(predicate);
-       // } else {
-       //     Assert.fail("You must provide an assertion");
         }
     }
 
@@ -178,7 +177,7 @@ public class TextualUITestGenerator {
 
             if(isChild == false){
                 if (mc.getName().toString().equals("withId")) {
-                    objectId = "RESOURCE_ID=" + BuildConfig.APPLICATION_ID + ":id/" + mc.getArguments().get(i).toString().substring(5);
+                    objectId = "RESOURCE_ID=" + "esadrcanfer.us.alumno.autotesting" + ":id/" + mc.getArguments().get(i).toString().substring(5);
                     this.tempId = "toElementById=" + mc.getArgument(i).toString().substring(5);
                 }
 

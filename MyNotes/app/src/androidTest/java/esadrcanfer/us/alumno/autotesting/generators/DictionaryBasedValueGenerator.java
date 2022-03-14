@@ -1,4 +1,4 @@
-package esadrcanfer.us.alumno.autotesting.dictionary;
+package esadrcanfer.us.alumno.autotesting.generators;
 
 
 import net.sf.extjwnl.JWNLException;
@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class DictionaryBasedValueGenerator {
+public class DictionaryBasedValueGenerator extends AbstractGenerator{
     public static final int DEFAULT_NUMBER_OF_WORDS=3;
     public static final String[] IGNORED_WORDS= {"is","of","and","where","this","that"};
     
@@ -24,25 +24,23 @@ public class DictionaryBasedValueGenerator {
     protected Random randomGenerator;
     
 
-    public DictionaryBasedValueGenerator()
-    {
+    public DictionaryBasedValueGenerator(){
         this(DEFAULT_NUMBER_OF_WORDS,DEFAULT_NUMBER_OF_WORDS, new Random().nextLong());
     }
     public DictionaryBasedValueGenerator(int words, Long seed) {
         this(words,words, seed);
     }    
-    
-    
-    
+
+
     public DictionaryBasedValueGenerator(int minWords,int maxWords, Long seed) {
         this.minWords=minWords;
         this.maxWords = maxWords;
         this.randomGenerator = new Random(seed);
-        
+
     }
 
     //@Override
-    public Object generate() throws JWNLException {
+    public String generate() throws JWNLException { //El método antes devolvía Object, lo he cambiado a String
         List<POS> poses=POS.getAllPOS();
         POS pos=defaultPOS;
         IndexWord word;
