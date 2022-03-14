@@ -56,7 +56,6 @@ public class TextInputGenerator extends InputGenerator {
                 integerList.add(Integer.parseInt(number));
             }
         }
-
         try {
             if (getSeed() > 0 || defaultValue == null) {
                 switch (type) {
