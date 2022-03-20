@@ -74,14 +74,7 @@ public class ReadUtil {
         List<Action> afterActions = new ArrayList<>();
         List<Action> testActions = new ArrayList<>();
         String text = readText();
-        String[] lines = {"esadrcanfer.us.alumno.autotesting",
-                "-1992",
-                "5",
-                "BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.autotesting:id/button], Create note",
-        "SCROLL_TO, UiSelector[RESOURCE_ID=], toElementById=editText1",
-        "TEXT, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.autotesting:id/editText1], e",
-        "SCROLL_TO, UiSelector[RESOURCE_ID=], toElementById=button",
-        "BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.autotesting:id/button], Save"};
+        String[] lines = text.split("\n");
         String appPackage = lines[0];
         Long seed;
 
