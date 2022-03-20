@@ -3,6 +3,7 @@ package esadrcanfer.us.alumno.autotesting.util;
 import android.os.Environment;
 import android.util.Log;
 
+import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiSelector;
 
@@ -18,6 +19,7 @@ import java.util.Random;
 
 import esadrcanfer.us.alumno.autotesting.TestCase;
 import esadrcanfer.us.alumno.autotesting.inagraph.CloseAppAction;
+import esadrcanfer.us.alumno.autotesting.inagraph.GoBackAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.StartAppAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.ButtonAction;
@@ -150,10 +152,14 @@ public class ReadUtil {
         String type = splitAction[0];       // Seleccionar el tipo de objeto (botón, cuadro de texto, radio button, etc.)
         String resourceId = splitAction[1]; // Selector del objeto sobre el que actuar
         String value = splitAction.length==2?"":splitAction[2];      // Valor a usar para realizar la acción
-        String selectorType = resourceId.substring(resourceId.indexOf("[")+1,resourceId.indexOf("=")).trim();
-        resourceId = resourceId.substring(resourceId.indexOf("=") + 1 ,resourceId.length()-1);
+        String selectorType = "";
+        if(!resourceId.equals("UiSelector[backButton]")) {
+            selectorType = resourceId.substring(resourceId.indexOf("[") + 1, resourceId.indexOf("=")).trim();
+            resourceId = resourceId.substring(resourceId.indexOf("=") + 1, resourceId.length() - 1);
+        }
         Action res = null;
         UiObject object = null;
+        UiDevice device = UiDevice.getInstance();
         if(selectorType.equals("RESOURCE_ID"))
             object = new UiObject(new UiSelector().resourceId(resourceId));
         else if(selectorType.equals("DESCRIPTION"))
@@ -193,6 +199,9 @@ public class ReadUtil {
                 break;
             case "SWITCH":
                 res = new SwitchAction(object);
+
+            case "GO_BACK":
+                res = new GoBackAction(device);
         }
         Log.d("ISA", "Action: " + action);
         Log.d("ISA", "Value: " + value);

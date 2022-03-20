@@ -167,6 +167,12 @@ public class TextualUITestGenerator {
             childs.add(mc.toString());
         }
 
+        if(mc.toString().equals("pressBack()")){
+            objectTypes.add("GO_BACK");
+            selectors.add("backButton");
+            texts.add("Go back");
+        }
+
         for(int i = 0; i < mc.getArguments().size(); i++){
             Boolean isChild = false;
             for(int j = 0; j < childs.size(); j++){
