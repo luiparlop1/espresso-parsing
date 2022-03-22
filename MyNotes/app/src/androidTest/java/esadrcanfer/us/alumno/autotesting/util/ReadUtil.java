@@ -86,18 +86,17 @@ public class ReadUtil {
             seed = Math.abs(new Random().nextLong());
         }
         Integer actionsSize = new Integer(lines[2]);
-        Random random = new Random(seed);
         String action = "";
         String generatorType = "";
         String cond1 = "";
         String cond2 = "";
         Integer textInputCounter = 0;
+        ReadUtil ru = new ReadUtil("Download/configu.txt");
+        String configFile = ru.readText();
+        String[] configLines = configFile.split("\n");
         for(int i = 3; i<= actionsSize + 2; i++){
             action = lines[i];
             if(action.contains("TEXT")) {
-                ReadUtil ru = new ReadUtil("Download/configu.txt");
-                String configFile = ru.readText();
-                String[] configLines = configFile.split("\n");
                 String configLine = configLines[textInputCounter];
                 textInputCounter++;
                 String[] splitConfigLine = configLine.split("-");
