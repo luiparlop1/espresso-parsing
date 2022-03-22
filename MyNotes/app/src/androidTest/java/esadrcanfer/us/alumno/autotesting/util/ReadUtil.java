@@ -104,10 +104,7 @@ public class ReadUtil {
 
                 String conditions = splitConfigLine[1];
                 String[] splitConditions = conditions.split("/");
-
                 cond1 = splitConditions[0];
-                cond2 = "";
-
                 if(!conditions.endsWith("/")) {
                     cond2 = splitConditions[1];
                 }
