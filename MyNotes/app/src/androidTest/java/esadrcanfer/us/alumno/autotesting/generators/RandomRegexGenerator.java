@@ -22,8 +22,8 @@ public class RandomRegexGenerator extends AbstractGenerator{
             Xeger generator = new Xeger(regex);
             randomValue = generator.generate();
             assert randomValue.matches(regex);
-        }else if(type.equals("viking")){
-            String regex = "[CJPTFVNDL][aeiou][cjptfvndl][aeiou]( el )(destruye|pisa|empuña|tuerce|troncha|acaricia|pasea|devuelve|vuela|insulta|abraza|consume|desestabiliza|respira|regaña)( gatos| peces| puentes| soles| guantes| zapatos| chicles| mares| pelos| uñas| mundos| conceptos| palomitas)";
+        }else if(type.equals("phone")){
+            String regex = "(95)[0123456789]( )[0123456789][0123456789][0123456789]( )[0123456789][0123456789][0123456789]";
             Xeger generator = new Xeger(regex);
             randomValue = generator.generate();
             assert randomValue.matches(regex);
