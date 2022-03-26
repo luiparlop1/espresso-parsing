@@ -21,7 +21,7 @@ public class PredicateEvaluator {
         if (assertionResult instanceof Boolean) {
             result = (Boolean) assertionResult;
         } else {
-            throw new IllegalArgumentException("The assertion '" + testCase.getPredicate() + "' is not a valid, since its evaluation does not return a boolean result");
+            throw new IllegalArgumentException("The assertion '" + testCase.getPredicate() + "' is not valid, since its evaluation does not return a boolean result");
 
         }
         return result;
@@ -35,7 +35,7 @@ public class PredicateEvaluator {
         if (assertionResult instanceof Boolean) {
             result = (Boolean) assertionResult;
         } else {
-            throw new IllegalArgumentException("The assertion '" + testCase.getPredicate() + "' is not a valid, since its evaluation does not return a boolean result");
+            throw new IllegalArgumentException("The assertion '" + testCase.getPredicate() + "' is not valid, since its evaluation does not return a boolean result");
         }
         return result;
     }

@@ -86,7 +86,7 @@ public class TextualUITestGenerator {
     private void processMethod(MethodDeclaration md) {
         // Procesamos las declaraciones de interacciones:
         md.findAll(VariableDeclarationExpr.class).forEach(vde -> {
-            processVariableDesclaration(vde);
+            processVariableDeclaration(vde);
         });
 
         List<String> childs = new ArrayList<>();
@@ -96,7 +96,7 @@ public class TextualUITestGenerator {
         });
     }
 
-    private void processVariableDesclaration(VariableDeclarationExpr vde) {
+    private void processVariableDeclaration(VariableDeclarationExpr vde) {
         for(int i = 0; i < vde.getVariables().size(); i++){
             if((vde.getVariable(i).getName().toString().startsWith("appCompatEditText") || vde.getVariable(i).getName().toString().startsWith("editText")) && vde.getVariable(i).toString().contains("withText")){
                 replacingCount++;
@@ -105,6 +105,12 @@ public class TextualUITestGenerator {
     }
 
     private void processActionAndSelectors(MethodCallExpr mc, List<String> childs) {
+        if(mc.getName().toString().startsWith("assertionCheck")){
+            objectTypes.add("ASSERT");
+            selectors.add("");
+            texts.add("");
+        }
+
         if(mc.getName().toString().equals("scrollTo")){
             objectTypes.add("SCROLL_TO");
             selectors.add("RESOURCE_ID=");

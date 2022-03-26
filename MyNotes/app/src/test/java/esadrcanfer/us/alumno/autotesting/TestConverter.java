@@ -9,7 +9,7 @@ public class TestConverter {
     @Test
     public void crearNotaTest() throws IOException {
         TextualUITestGenerator parse = new TextualUITestGenerator();
-        parse.textualUITestGenerator("BackTest","src/androidTest/java/esadrcanfer/us/alumno/autotesting/", BuildConfig.APPLICATION_ID);
+        parse.textualUITestGenerator("testFallo","src/androidTest/java/esadrcanfer/us/alumno/autotesting/", BuildConfig.APPLICATION_ID);
     }
 
 }

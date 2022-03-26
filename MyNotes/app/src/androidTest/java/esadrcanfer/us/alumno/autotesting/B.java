@@ -36,13 +36,13 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class Test3Notas {
+public class B {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void test3Notas() {
+    public void b() {
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.button), withText("Create note"),
                         childAtPosition(
@@ -61,7 +61,7 @@ public class Test3Notas {
                                                 withClassName(is("android.widget.RelativeLayout")),
                                                 4)),
                                 1)));
-        appCompatEditText.perform(scrollTo(), replaceText("e"), closeSoftKeyboard());
+        appCompatEditText.perform(scrollTo(), replaceText("B"), closeSoftKeyboard());
 
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(R.id.button), withText("Save"),
@@ -71,6 +71,8 @@ public class Test3Notas {
                                         0),
                                 10)));
         appCompatButton2.perform(scrollTo(), click());
+
+        assertionCheck();
 
         ViewInteraction appCompatButton3 = onView(
                 allOf(withId(R.id.button), withText("Create note"),
@@ -90,7 +92,7 @@ public class Test3Notas {
                                                 withClassName(is("android.widget.RelativeLayout")),
                                                 4)),
                                 1)));
-        appCompatEditText2.perform(scrollTo(), replaceText("i"), closeSoftKeyboard());
+        appCompatEditText2.perform(scrollTo(), replaceText("B2"), closeSoftKeyboard());
 
         ViewInteraction appCompatButton4 = onView(
                 allOf(withId(R.id.button), withText("Save"),
@@ -100,35 +102,14 @@ public class Test3Notas {
                                         0),
                                 10)));
         appCompatButton4.perform(scrollTo(), click());
+    }
 
-        ViewInteraction appCompatButton5 = onView(
-                allOf(withId(R.id.button), withText("Create note"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                3),
+    public ViewInteraction assertionCheck(){
+        ViewInteraction button = onView(
+                allOf(withId(R.id.button), withText("CREATE NOTE"),
+                        withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
-        appCompatButton5.perform(click());
-
-        ViewInteraction appCompatEditText3 = onView(
-                allOf(withId(R.id.editText1),
-                        childAtPosition(
-                                allOf(withId(R.id.linearLayout1),
-                                        childAtPosition(
-                                                withClassName(is("android.widget.RelativeLayout")),
-                                                4)),
-                                1)));
-        appCompatEditText3.perform(scrollTo(), replaceText("o"), closeSoftKeyboard());
-
-        ViewInteraction appCompatButton6 = onView(
-                allOf(withId(R.id.button), withText("Save"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.LinearLayout")),
-                                        0),
-                                10)));
-        appCompatButton6.perform(scrollTo(), click());
+        return button.check(matches(isDisplayed()));
     }
 
     private static Matcher<View> childAtPosition(
