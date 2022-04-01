@@ -94,7 +94,8 @@ public class ReadUtil {
         ReadUtil ru = new ReadUtil("Download/configu.txt");
         String configFile = ru.readText();
         String[] configLines = configFile.split("\n");
-        for(int i = 3; i<= actionsSize + 2; i++){
+        String predicate = null; //Inicializo a null la aserción porque no tiene por qué haberlas siempre.
+        for(int i = 3; i<= lines.length-1; i++){
             action = lines[i];
             if(action.contains("TEXT")) {
                 String configLine = configLines[textInputCounter];
@@ -109,22 +110,22 @@ public class ReadUtil {
                     cond2 = splitConditions[1];
                 }
             }
-            if (seed <  0)
-                testActions.add(generateActionFromString(action,  seed, generatorType,cond1,cond2));
-            else
-                testActions.add(generateActionFromString(action, seed, generatorType,cond1,cond2)); //Antes, pasaba un número random que no sé por qué estaba ahí. Hay que pasarle el seed
-            if(i == actionsSize+2){
-                actionsSize = i;
-                break;
+            if(action.startsWith("currentState")){
+                predicate = action;
+            }
+            if (seed <  0) {
+                if (!action.startsWith("currentState"))
+                    testActions.add(generateActionFromString(action, seed, generatorType, cond1, cond2));
+            }else {
+                if (!action.startsWith("currentState"))
+                    testActions.add(generateActionFromString(action, seed, generatorType, cond1, cond2)); //Antes, pasaba un número random que no sé por qué estaba ahí. Hay que pasarle el seed
+            }
+            if(predicate==null) {
+                if (i == actionsSize + 2) {
+                    break;
+                }
             }
         }
-        String predicate = null; //Inicializo a null la aserción porque no tiene por qué haberlas siempre.
-        long numberOfLines = Arrays.stream(lines).count(); //Cuento el número de líneas del archivo
-        actionsSize = new Integer(lines[2]); //Vuelvo a setear actionsSize porque el método de arriba las cambia para acabar el for y las "arruina"
-        if (numberOfLines != actionsSize+3) { //Esto cuenta las líneas y si no hay aserción, no habrá mas de actionsSize + 3
-            predicate = lines[actionsSize + 3]; //Si hay aserción, se va a la línea donde debería estar. Cambié el +1 por un +3 porque tres líneas más arriba he cambiado el valor de actionsSize después del for
-        }
-
         List<String> initialLabels = new ArrayList<>();
         /*
         String initialState = lines[actionsSize+2].replaceAll("\\[", "").replaceAll("\\]", "");

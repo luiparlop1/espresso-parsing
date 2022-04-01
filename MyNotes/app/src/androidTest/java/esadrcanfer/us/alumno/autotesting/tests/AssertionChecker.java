@@ -24,9 +24,9 @@ public abstract class AssertionChecker<T>{
 
     public abstract boolean assertionCheck();
 
-    public static List<String> setInitialLabels() throws UiObjectNotFoundException {
+    public static List<String> setLabels() throws UiObjectNotFoundException {
         UiDevice device = UiDevice.getInstance(getInstrumentation());
-        List<String> initialState = new ArrayList<>();
+        List<String> state = new ArrayList<>();
         List<UiObject2> elements = device.findObjects(By.clazz(TextView.class));
         elements.addAll(device.findObjects(By.clazz(CheckBox.class)));
         elements.addAll(device.findObjects(By.clazz(Button.class)));
@@ -39,30 +39,9 @@ public abstract class AssertionChecker<T>{
             String text = label.getText();
             //Solución básica, hay que mejorarla
             if (text!=null && (!(text.contains(":") || text.contains("%")))) {
-               initialState.add(text);
+               state.add(text);
             }
         }
-        return initialState;
-    }
-
-    public static List<String> setFinalLabels() throws UiObjectNotFoundException {
-        UiDevice device = UiDevice.getInstance(getInstrumentation());
-        List<String> finalState = new ArrayList<>();
-        List<UiObject2> elements = device.findObjects(By.clazz(TextView.class));
-        elements.addAll(device.findObjects(By.clazz(CheckBox.class)));
-        elements.addAll(device.findObjects(By.clazz(Button.class)));
-        elements.addAll(device.findObjects(By.clazz(RadioButton.class)));
-        elements.addAll(device.findObjects(By.clazz(ScrollView.class)));
-        elements.addAll(device.findObjects(By.clazz(Spinner.class)));
-        elements.addAll(device.findObjects(By.clazz(CheckedTextView.class)));
-        elements.addAll(device.findObjects(By.clazz(Switch.class)));
-        for (UiObject2 label : elements) {
-            String text = label.getText();
-            //Solución básica, hay que mejorarla
-            if (text!=null && (!(text.contains(":") || text.contains("%")))) {
-                finalState.add(text);
-            }
-        }
-        return finalState;
+        return state;
     }
 }

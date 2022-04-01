@@ -5,15 +5,15 @@ import androidx.test.uiautomator.UiObjectNotFoundException;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import esadrcanfer.us.alumno.autotesting.tests.ReadTestCase;
 
 public class ParsedTestReader {
 
     @Test
-    public void crearNotaUITest() throws UiObjectNotFoundException, IOException {
+    public void crearNotaUITest() throws UiObjectNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         ReadTestCase read = new ReadTestCase();
-        read.read("TestCreateContactLuis", false);
+        read.read("TestSimpleA", true);
     }
-
 }

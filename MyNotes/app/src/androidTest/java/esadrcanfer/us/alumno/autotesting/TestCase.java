@@ -2,6 +2,7 @@ package esadrcanfer.us.alumno.autotesting;
 
 import androidx.test.uiautomator.UiObjectNotFoundException;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -104,6 +105,22 @@ public class TestCase {
     public boolean evaluate(){
         if(predicate!=null){
         return predicate.evaluate(this);
+        }
+        return true;  //Devuelve true siempre que no haya aserción
+    }
+
+    public boolean evaluateAssertion() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        String target = "TestSimpleA";
+        Class targetClass = null;
+        try {
+            targetClass = Class.forName("esadrcanfer.us.alumno.autotesting."+target);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        targetClass.getMethod("assertionCheck").invoke(null);
+
+        if(predicate!=null) {
+
         }
         return true;
     }
