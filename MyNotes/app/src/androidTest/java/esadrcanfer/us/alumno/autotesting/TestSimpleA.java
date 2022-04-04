@@ -75,12 +75,17 @@ public class TestSimpleA {
         assertionCheck();
     }
 
-    public void assertionCheck(){
+    public boolean assertionCheck(){
         ViewInteraction button = onView(
                 allOf(withId(R.id.button), withText("CREATE NOTE"),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
-        button.check(matches(isDisplayed()));
+        try {
+            button.check(matches(isDisplayed()));
+            return true;
+        }catch(IllegalArgumentException e){
+            return false;
+        }
     }
 
     private static Matcher<View> childAtPosition(

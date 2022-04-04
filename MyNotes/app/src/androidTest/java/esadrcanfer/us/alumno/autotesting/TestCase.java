@@ -2,7 +2,9 @@ package esadrcanfer.us.alumno.autotesting;
 
 import androidx.test.uiautomator.UiObjectNotFoundException;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -111,18 +113,34 @@ public class TestCase {
 
     public boolean evaluateAssertion() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         String target = "TestSimpleA";
-        Class targetClass = null;
+        Class<?> targetClass = null;
         try {
             targetClass = Class.forName("esadrcanfer.us.alumno.autotesting."+target);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        targetClass.getMethod("assertionCheck").invoke(null);
+        boolean res = true;
+
+        Object test = null;
+        Constructor constructor = null;
+
+        try {
+            constructor = targetClass.getConstructor();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        try {
+            test = constructor.newInstance();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
 
         if(predicate!=null) {
-
+        res = (boolean) targetClass.getMethod("assertionCheck").invoke(test, null);
         }
-        return true;
+        return res;
     }
 
 

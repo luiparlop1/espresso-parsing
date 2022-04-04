@@ -121,7 +121,7 @@ public class ReadUtil {
                     testActions.add(generateActionFromString(action, seed, generatorType, cond1, cond2)); //Antes, pasaba un número random que no sé por qué estaba ahí. Hay que pasarle el seed
             }
             if(predicate==null) {
-                if (i == actionsSize + 2) {
+                if (i == actionsSize + 3) {
                     break;
                 }
             }
