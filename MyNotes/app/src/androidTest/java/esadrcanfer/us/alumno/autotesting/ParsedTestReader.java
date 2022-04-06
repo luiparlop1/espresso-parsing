@@ -12,8 +12,8 @@ import esadrcanfer.us.alumno.autotesting.tests.ReadTestCase;
 public class ParsedTestReader {
 
     @Test
-    public void crearNotaUITest() throws UiObjectNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    public void crearNotaUITest() throws UiObjectNotFoundException, IOException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, NoSuchFieldException {
         ReadTestCase read = new ReadTestCase();
-        read.read("TestSimpleA", true);
+        read.read("TestSimpleAsercion", true);
     }
 }

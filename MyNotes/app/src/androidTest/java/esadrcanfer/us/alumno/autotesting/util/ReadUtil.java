@@ -110,14 +110,14 @@ public class ReadUtil {
                     cond2 = splitConditions[1];
                 }
             }
-            if(action.startsWith("currentState")){
+            if(action.startsWith("finalState")){
                 predicate = action;
             }
             if (seed <  0) {
-                if (!action.startsWith("currentState"))
+                if (!action.startsWith("finalState"))
                     testActions.add(generateActionFromString(action, seed, generatorType, cond1, cond2));
             }else {
-                if (!action.startsWith("currentState"))
+                if (!action.startsWith("finalState"))
                     testActions.add(generateActionFromString(action, seed, generatorType, cond1, cond2)); //Antes, pasaba un número random que no sé por qué estaba ahí. Hay que pasarle el seed
             }
             if(predicate==null) {

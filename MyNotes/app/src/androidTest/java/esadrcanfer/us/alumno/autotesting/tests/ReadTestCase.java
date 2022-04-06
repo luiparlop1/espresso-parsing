@@ -24,7 +24,7 @@ import esadrcanfer.us.alumno.autotesting.util.ReadUtil;
 public class ReadTestCase {
 
     @Test
-    public void read(String s, boolean b) throws UiObjectNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    public void read(String s, boolean b) throws UiObjectNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, NoSuchFieldException {
         UiDevice.getInstance(getInstrumentation());
         ReadUtil readUtil = new ReadUtil("Download/"+s+".txt", b);
         TestCase testCase = readUtil.generateTestCase();

@@ -40,6 +40,8 @@ public class TestSimpleAsercion {
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
+    public boolean assertionIsTrue = false;
+
     @Test
     public void testSimpleAsercion() {
         ViewInteraction appCompatButton = onView(
@@ -74,12 +76,20 @@ public class TestSimpleAsercion {
         appCompatButton2.perform(scrollTo(), click());
     }
 
-    public void assertionCheck(){
-        ViewInteraction button = onView(
-                allOf(withId(R.id.button), withText("SAVE"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class))),
-                        isDisplayed()));
-        button.check(matches(isDisplayed()));
+    public void assertionCheck() {
+        ViewInteraction checkSave = onView(
+                allOf(withId(R.id.button), withText("Save"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.LinearLayout")),
+                                        0),
+                                10)));
+        try {
+            checkSave.check(matches(isDisplayed()));
+            assertionIsTrue = true;
+        } catch (IllegalArgumentException e) {
+            assertionIsTrue = false;
+        }
     }
 
     private static Matcher<View> childAtPosition(

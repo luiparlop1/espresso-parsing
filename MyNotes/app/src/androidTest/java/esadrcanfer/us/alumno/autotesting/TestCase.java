@@ -3,8 +3,8 @@ package esadrcanfer.us.alumno.autotesting;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -111,15 +111,15 @@ public class TestCase {
         return true;  //Devuelve true siempre que no haya aserción
     }
 
-    public boolean evaluateAssertion() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        String target = "TestSimpleA";
+    public boolean evaluateAssertion() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
+        String target = "TestSimpleAsercion";
         Class<?> targetClass = null;
         try {
             targetClass = Class.forName("esadrcanfer.us.alumno.autotesting."+target);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        boolean res = true;
+        boolean res = false;
 
         Object test = null;
         Constructor constructor = null;
@@ -138,7 +138,16 @@ public class TestCase {
         }
 
         if(predicate!=null) {
-        res = (boolean) targetClass.getMethod("assertionCheck").invoke(test, null);
+            String className = targetClass.getName();
+            String[] completeMethodName = className.split("\\.");
+            String realMethodName = completeMethodName[completeMethodName.length-1];
+            String methodName = String.valueOf(realMethodName.charAt(0)).toLowerCase() + realMethodName.substring(1);
+            targetClass.getMethod(methodName).invoke(test, null);
+            Field checked = test.getClass().getField("assertionIsTrue");
+            boolean isTrue = checked.getBoolean(test);
+            if(isTrue==true){
+                res = true;
+            }
         }
         return res;
     }
