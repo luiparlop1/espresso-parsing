@@ -2,7 +2,6 @@ package esadrcanfer.us.alumno.autotesting.tests;
 
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static esadrcanfer.us.alumno.autotesting.tests.AssertionChecker.setLabels;
-import static esadrcanfer.us.alumno.autotesting.tests.AutomaticRepairTests.labelsDetection;
 
 import android.util.Log;
 

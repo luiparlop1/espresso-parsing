@@ -33,9 +33,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import esadrcanfer.us.alumno.autotesting.tests.AssertionChecker;
+
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class TestSimpleAsercion {
+public class TestSimpleAsercion extends AssertionChecker {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);

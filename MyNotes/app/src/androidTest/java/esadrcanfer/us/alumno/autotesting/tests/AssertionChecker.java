@@ -22,7 +22,7 @@ import java.util.List;
 
 public abstract class AssertionChecker<T>{
 
-    public abstract boolean assertionCheck();
+    public abstract void assertionCheck();
 
     public static List<String> setLabels() throws UiObjectNotFoundException {
         UiDevice device = UiDevice.getInstance(getInstrumentation());
