@@ -2,7 +2,7 @@ esadrcanfer.us.alumno.autotesting
 -1
 5
 BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.autotesting:id/button], Create note
-currentState.contains("SAVE")
+finalState.contains("Save")
 SCROLL_TO, UiSelector[RESOURCE_ID=], toElementById=editText1
 TEXT, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.autotesting:id/editText1], e
 SCROLL_TO, UiSelector[RESOURCE_ID=], toElementById=button

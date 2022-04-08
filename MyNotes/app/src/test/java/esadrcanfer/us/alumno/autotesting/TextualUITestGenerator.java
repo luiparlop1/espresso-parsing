@@ -197,7 +197,7 @@ public class TextualUITestGenerator {
                 if (mc.getName().toString().equals("withText")) {
                     texts.add(mc.getArguments().get(i).toString().substring(1, mc.getArgument(i).toString().length() - 1));
                     if (isMatchingText == true) {
-                        predicate = "currentState.contains(" + mc.getArgument(i).toString() + ")";
+                        predicate = "finalState.contains(" + mc.getArgument(i).toString() + ")";
                         texts.remove(texts.size() - 1);
                         isMatchingText = false;
                     }
@@ -228,7 +228,7 @@ public class TextualUITestGenerator {
                 }
                 if(isObjectType){
                     if (mc.getArgument(i).toString().equals("matches(isDisplayed())")){
-                        predicate = "currentState.contains(" + '"' + texts.get(texts.size() - 1) + '"' + ")";
+                        predicate = "finalState.contains(" + '"' + texts.get(texts.size() - 1) + '"' + ")";
                     }
                     texts.remove(texts.size() - 1);
                 }
