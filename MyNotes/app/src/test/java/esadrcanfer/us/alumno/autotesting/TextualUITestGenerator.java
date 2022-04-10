@@ -162,6 +162,11 @@ public class TextualUITestGenerator {
         if(mc.getName().toString().equals("click") && (mc.getParentNode().toString().startsWith("Optional[appCompatEditText") || mc.getParentNode().toString().startsWith("Optional[editText"))){
             objectTypes.add("TEXT");
         }
+        if(mc.getName().toString().startsWith("assertTrue")){
+            objectTypes.add("CUSTOM ASSERTION");
+            selectors.add("onClass="+FILE);
+            texts.add("Check custom assertion");
+        }
 
         if(mc.toString().startsWith("childAtPosition")){
             childs.add(mc.toString());

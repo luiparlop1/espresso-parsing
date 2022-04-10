@@ -2,6 +2,9 @@ package esadrcanfer.us.alumno.autotesting;
 
 import androidx.test.uiautomator.UiObjectNotFoundException;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -106,6 +109,37 @@ public class TestCase {
         return predicate.evaluate(this);
         }
         return true;
+    }
+
+    public void customEvaluate() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
+        String predicateString = predicate.toString();
+        String target = predicateString.substring(predicateString.indexOf("=")+1,predicateString.indexOf("]"));
+        Class<?> targetClass = null;
+        try {
+            targetClass = Class.forName("esadrcanfer.us.alumno.autotesting."+target);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        Object test = null;
+        Constructor constructor = null;
+
+        try {
+            constructor = targetClass.getConstructor();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        try {
+            test = constructor.newInstance();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        if(predicate!=null) {
+            String methodName = "assertionCheck";
+            targetClass.getMethod(methodName).invoke(test, null);
+        }
     }
 
 

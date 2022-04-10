@@ -1,9 +1,0 @@
-esadrcanfer.us.alumno.autotesting
--1
-6
-BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.autotesting:id/button], Create note
-SCROLL_TO, UiSelector[RESOURCE_ID=], toElementById=editText1
-TEXT, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.autotesting:id/editText1], erere
-SCROLL_TO, UiSelector[RESOURCE_ID=], toElementById=idRadio1
-RADIO_BUTTON, UiSelector[RESOURCE_ID=esadrcanfer.us.alumno.autotesting:id/idRadio1], Critica
-GO_BACK, UiSelector[backButton], Go back
