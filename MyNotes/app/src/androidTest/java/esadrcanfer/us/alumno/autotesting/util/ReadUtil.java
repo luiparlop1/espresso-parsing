@@ -20,7 +20,7 @@ import java.util.Random;
 import esadrcanfer.us.alumno.autotesting.TestCase;
 import esadrcanfer.us.alumno.autotesting.inagraph.CloseAppAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.GoBackAction;
-import esadrcanfer.us.alumno.autotesting.inagraph.ScreenshotAction;
+import esadrcanfer.us.alumno.autotesting.inagraph.actions.ScreenshotAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.StartAppAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.ButtonAction;

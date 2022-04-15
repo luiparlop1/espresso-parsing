@@ -1,17 +1,13 @@
-package esadrcanfer.us.alumno.autotesting.inagraph;
+package esadrcanfer.us.alumno.autotesting.inagraph.actions;
 
 import static esadrcanfer.us.alumno.autotesting.tests.AutomaticRepairTests.labelsDetection;
 
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 
-import org.junit.Assert;
-
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
-import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
 import esadrcanfer.us.alumno.autotesting.tests.AssertionChecker;
 import esadrcanfer.us.alumno.autotesting.util.WriterUtil;
 
