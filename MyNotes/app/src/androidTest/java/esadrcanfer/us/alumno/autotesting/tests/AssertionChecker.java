@@ -6,6 +6,7 @@ public abstract class AssertionChecker {
 
     public static List<String> initialLabels;
     public static List<String> finalLabels;
+    public static List<String> screenshotLabels;
 
     public abstract void assertionCheck();
 
@@ -15,5 +16,9 @@ public abstract class AssertionChecker {
 
     public static void setFinalLabels(List<String> labels){
         finalLabels = labels;
+    }
+
+    public static void setScreenshotLabels(List<String> labels){
+        screenshotLabels = labels;
     }
 }

@@ -20,6 +20,7 @@ import java.util.Random;
 import esadrcanfer.us.alumno.autotesting.TestCase;
 import esadrcanfer.us.alumno.autotesting.inagraph.CloseAppAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.GoBackAction;
+import esadrcanfer.us.alumno.autotesting.inagraph.ScreenshotAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.StartAppAction;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.Action;
 import esadrcanfer.us.alumno.autotesting.inagraph.actions.ButtonAction;
@@ -152,13 +153,19 @@ public class ReadUtil {
 
     public Action  generateActionFromString(String action, Long seed, String generatorType, String cond1, String cond2){
         String[] splitAction = action.split(", "); // Dividir la cadena por comas
-        String type = splitAction[0];       // Seleccionar el tipo de objeto (botón, cuadro de texto, radio button, etc.)
-        String resourceId = splitAction[1]; // Selector del objeto sobre el que actuar
-        String value = splitAction.length==2?"":splitAction[2];      // Valor a usar para realizar la acción
+        String type = splitAction[0];// Seleccionar el tipo de objeto (botón, cuadro de texto, radio button, etc.)
+        String resourceId = "";
+        String value = "";
+        if(splitAction.length>1) {
+            resourceId = splitAction[1]; // Selector del objeto sobre el que actuar
+            value = splitAction.length == 2 ? "" : splitAction[2];      // Valor a usar para realizar la acción
+        }
         String selectorType = "";
         if(!resourceId.equals("UiSelector[backButton]") || (!resourceId.startsWith("UiSelector[onClass=]"))) {
-            selectorType = resourceId.substring(resourceId.indexOf("[") + 1, resourceId.indexOf("=")).trim();
-            resourceId = resourceId.substring(resourceId.indexOf("=") + 1, resourceId.length() - 1);
+            if (!resourceId.equals("")) {
+                selectorType = resourceId.substring(resourceId.indexOf("[") + 1, resourceId.indexOf("=")).trim();
+                resourceId = resourceId.substring(resourceId.indexOf("=") + 1, resourceId.length() - 1);
+            }
         }
         Action res = null;
         UiObject object = null;
@@ -205,6 +212,10 @@ public class ReadUtil {
 
             case "GO_BACK":
                 res = new GoBackAction(device);
+
+            case "SCREENSHOT":
+                res = new ScreenshotAction(device);
+
         }
         Log.d("ISA", "Action: " + action);
         Log.d("ISA", "Value: " + value);

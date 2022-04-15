@@ -32,10 +32,10 @@ public class ReadTestCase {
         testCase.executeBefore();
         List<String> initialState = labelsDetection();
         AssertionChecker.setInitialLabels(initialState);
-//        testCase.setInitialState(initialState);
+        testCase.setInitialState(initialState);
         testCase.executeTest();
         List<String> finalState = labelsDetection();
-//        testCase.setFinalState(finalState);
+        testCase.setFinalState(finalState);
         AssertionChecker.setFinalLabels(finalState);
         Boolean eval = true;
         if(testCase.getPredicate().toString().startsWith("CUSTOM ASSERTION")){
