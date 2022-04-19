@@ -92,7 +92,7 @@ public class ReadUtil {
         String cond1 = "";
         String cond2 = "";
         Integer textInputCounter = 0;
-        ReadUtil ru = new ReadUtil("Download/configu.txt");
+        ReadUtil ru = new ReadUtil("Download/config.txt");
         String configFile = ru.readText();
         String[] configLines = configFile.split("\n");
         String predicate = null; //Inicializo predicate a null porque no siempre tiene por qué haberlo

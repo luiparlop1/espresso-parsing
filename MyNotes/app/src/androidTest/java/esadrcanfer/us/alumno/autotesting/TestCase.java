@@ -111,7 +111,7 @@ public class TestCase {
         return true;
     }
 
-    public void customEvaluate() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
+    public void customEvaluate() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException{
         String predicateString = predicate.toString();
         String target = predicateString.substring(predicateString.indexOf("=")+1,predicateString.indexOf("]"));
         Class<?> targetClass = null;

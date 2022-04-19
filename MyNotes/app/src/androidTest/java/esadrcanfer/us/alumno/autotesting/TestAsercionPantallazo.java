@@ -37,7 +37,7 @@ import esadrcanfer.us.alumno.autotesting.tests.AssertionChecker;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class TestAsercion2 extends AssertionChecker {
+public class TestAsercionPantallazo extends AssertionChecker {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
@@ -77,7 +77,7 @@ public class TestAsercion2 extends AssertionChecker {
     }
     @Override
      public void assertionCheck(){
-        assertTrue(finalLabels.contains("Fernande"));
+        assertTrue(finalLabels.contains("Hola"));
         assertTrue(finalLabels.size()>initialLabels.size());
         List<String> editButtons = new ArrayList<String>();
         for(String s: finalLabels){

@@ -14,7 +14,7 @@ public class ParsedTestReader {
     @Test
     public void crearNotaUITest() throws UiObjectNotFoundException, IOException, InvocationTargetException, NoSuchMethodException, IllegalAccessException, NoSuchFieldException {
         ReadTestCase read = new ReadTestCase();
-        read.read("TestPantallazo", false);
+        read.read("TestAsercionPantallazo", false);
     }
 
 }
