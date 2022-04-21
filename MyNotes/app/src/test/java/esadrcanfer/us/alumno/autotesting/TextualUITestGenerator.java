@@ -86,7 +86,7 @@ public class TextualUITestGenerator {
     private void processMethod(MethodDeclaration md) {
         // Procesamos las declaraciones de interacciones:
         md.findAll(VariableDeclarationExpr.class).forEach(vde -> {
-            processVariableDesclaration(vde);
+            processVariableDeclaration(vde);
         });
 
         List<String> childs = new ArrayList<>();
@@ -96,7 +96,7 @@ public class TextualUITestGenerator {
         });
     }
 
-    private void processVariableDesclaration(VariableDeclarationExpr vde) {
+    private void processVariableDeclaration(VariableDeclarationExpr vde) {
         for(int i = 0; i < vde.getVariables().size(); i++){
             if((vde.getVariable(i).getName().toString().startsWith("appCompatEditText") || vde.getVariable(i).getName().toString().startsWith("editText")) && vde.getVariable(i).toString().contains("withText")){
                 replacingCount++;
@@ -163,9 +163,11 @@ public class TextualUITestGenerator {
             objectTypes.add("TEXT");
         }
         if(mc.getName().toString().startsWith("assertTrue")){
+            if(!objectTypes.contains("CUSTOM ASSERTION")){
             objectTypes.add("CUSTOM ASSERTION");
             selectors.add("onClass="+FILE);
             texts.add("Check custom assertion");
+            }
         }
 
         if(mc.toString().startsWith("childAtPosition")){
