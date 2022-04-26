@@ -9,6 +9,6 @@ public class TestConverter {
     @Test
     public void crearNotaTest() throws IOException {
         TextualUITestGenerator parse = new TextualUITestGenerator();
-        parse.textualUITestGenerator("TestAsercionPantallazo","src/androidTest/java/esadrcanfer/us/alumno/autotesting/", BuildConfig.APPLICATION_ID);
+        parse.textualUITestGenerator("AAAAA","src/androidTest/java/esadrcanfer/us/alumno/autotesting/", BuildConfig.APPLICATION_ID);
     }
 }

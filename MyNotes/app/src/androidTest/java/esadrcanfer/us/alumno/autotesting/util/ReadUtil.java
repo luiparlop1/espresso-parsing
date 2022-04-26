@@ -161,10 +161,12 @@ public class ReadUtil {
             value = splitAction.length == 2 ? "" : splitAction[2];      // Valor a usar para realizar la acción
         }
         String selectorType = "";
-        if(!resourceId.equals("UiSelector[backButton]") || (!resourceId.startsWith("UiSelector[onClass=]"))) {
-            if (!resourceId.equals("")) {
-                selectorType = resourceId.substring(resourceId.indexOf("[") + 1, resourceId.indexOf("=")).trim();
-                resourceId = resourceId.substring(resourceId.indexOf("=") + 1, resourceId.length() - 1);
+        if(!resourceId.equals("UiSelector[backButton]")) {
+            if(!resourceId.startsWith("UiSelector[onClass=]")) {
+                if (!resourceId.equals("")) {
+                    selectorType = resourceId.substring(resourceId.indexOf("[") + 1, resourceId.indexOf("=")).trim();
+                    resourceId = resourceId.substring(resourceId.indexOf("=") + 1, resourceId.length() - 1);
+                }
             }
         }
         Action res = null;
@@ -209,13 +211,13 @@ public class ReadUtil {
                 break;
             case "SWITCH":
                 res = new SwitchAction(object);
-
+                break;
             case "GO_BACK":
                 res = new GoBackAction(device);
-
+                break;
             case "SCREENSHOT":
                 res = new ScreenshotAction(device);
-
+                break;
         }
         Log.d("ISA", "Action: " + action);
         Log.d("ISA", "Value: " + value);

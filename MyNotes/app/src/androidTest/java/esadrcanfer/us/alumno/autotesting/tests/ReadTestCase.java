@@ -38,7 +38,7 @@ public class ReadTestCase {
         testCase.setFinalState(finalState);
         AssertionChecker.setFinalLabels(finalState);
         Boolean eval = true;
-        if(testCase.getPredicate().toString().startsWith("CUSTOM ASSERTION")){
+        if(testCase.getPredicate() != null && testCase.getPredicate().toString().startsWith("CUSTOM ASSERTION")){
             testCase.customEvaluate();
         }else {
             eval = testCase.evaluate();
