@@ -98,7 +98,7 @@ public class ReadUtil {
         String predicate = null; //Inicializo predicate a null porque no siempre tiene por qué haberlo
         for(int i = 3; i<= actionsSize + 2; i++){
             action = lines[i];
-            if(action.contains("TEXT")) {
+            if(action.startsWith("TEXT")) {
                 String configLine = configLines[textInputCounter];
                 textInputCounter++;
                 String[] splitConfigLine = configLine.split("-");
